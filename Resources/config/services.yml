@@ -1,0 +1,91 @@
+services:
+    swarrot_extension.processor.abstract:
+        class: MR\SwarrotExtensionBundle\Broker\Processor\Processor
+        abstract: true
+        arguments:
+            - 'replaced_by_BrokerProcessorPass'
+            - '@validator'
+        calls:
+            - ['setLogger', ['@logger']]
+
+    swarrot_extension.processor.unrecoverable_exception:
+        class: MR\SwarrotExtensionBundle\Broker\Processor\Configurator\UnrecoverableExceptionProcessorConfigurator
+        arguments:
+            - 'MR\SwarrotExtensionBundle\Broker\Processor\UnrecoverableExceptionProcessor'
+            - '@swarrot_extension.error.publisher'
+            - '@logger'
+
+    swarrot_extension.processor.x_death_max_count:
+        class: MR\SwarrotExtensionBundle\Broker\Processor\Configurator\XDeathMaxCountProcessorConfigurator
+        arguments:
+            - 'Swarrot\Processor\XDeath\XDeathMaxCountProcessor'
+            - '@swarrot_extension.processor.callback.x_death_max_count_exception_handler'
+            - '@logger'
+
+    swarrot_extension.processor.x_death_max_lifetime:
+        class: MR\SwarrotExtensionBundle\Broker\Processor\Configurator\XDeathMaxLifetimeProcessorConfigurator
+        arguments:
+            - 'Swarrot\Processor\XDeath\XDeathMaxLifetimeProcessor'
+            - '@swarrot_extension.processor.callback.x_death_max_lifetime_exception_handler'
+            - '@logger'
+
+    swarrot_extension.processor.callback.x_death_max_count_exception_handler:
+        class: MR\SwarrotExtensionBundle\Broker\Processor\Callback\XDeathMaxCountExceptionHandler
+        arguments:
+            - '@event_dispatcher'
+            - '@logger'
+
+    swarrot_extension.processor.callback.x_death_max_lifetime_exception_handler:
+        class: MR\SwarrotExtensionBundle\Broker\Processor\Callback\XDeathMaxLifetimeExceptionHandler
+        arguments:
+            - '@event_dispatcher'
+            - '@logger'
+
+    swarrot_extension.publisher.json_serializer:
+        class: MR\SwarrotExtensionBundle\Broker\Publisher\JsonSerializer
+
+    swarrot_extension.publisher.message_factory:
+        alias: swarrot_extension.publisher.message_factory.default
+
+    swarrot_extension.publisher.message_factory.default:
+        class: MR\SwarrotExtensionBundle\Broker\Publisher\MessageFactory
+
+    swarrot_extension.publisher:
+        class: MR\SwarrotExtensionBundle\Broker\Publisher\Publisher
+        arguments:
+            - '@swarrot.publisher'
+            - '@swarrot_extension.message_factory'
+        calls:
+            - ['setLogger', ['@logger']]
+
+    swarrot_extension.spooled_publisher:
+        class: MR\SwarrotExtensionBundle\Broker\Publisher\SpooledPublisher
+        arguments:
+            - '@swarrot.publisher'
+            - '@swarrot_extension.message_factory'
+        calls:
+            - ['setLogger', ['@logger']]
+
+    swarrot_extension.error_publisher.default:
+        class: MR\SwarrotExtensionBundle\Broker\Publisher\ErrorPublisher
+        arguments:
+            - '@swarrot_extension.publisher'
+            - '%swarrot_extension.error_publisher.routing_key_pattern%'
+            - '@swarrot_extension.publisher.json_serializer'
+
+    swarrot_extension.event_subscriber.x_death_error_publisher:
+        class: MR\SwarrotExtensionBundle\EventSubscriber\XDeathErrorPublisherSubscriber
+        arguments:
+            - '@swarrot_extension.error.publisher'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    swarrot_extension.command.vhost_mapping_create:
+        class: MR\SwarrotExtensionBundle\Command\VhostMappingCreateCommand
+        arguments:
+            - '%swarrot_extension.admin_connection.host%'
+            - '%swarrot_extension.admin_connection.port%'
+            - '%swarrot_extension.admin_connection.login%'
+            - '%swarrot_extension.admin_connection.password%'
+        tags:
+            - { name: console.command }

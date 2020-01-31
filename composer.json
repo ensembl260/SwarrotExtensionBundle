@@ -1,0 +1,29 @@
+{
+    "name": "mr/swarrot-extension-bundle",
+    "description": "SwarrotBundle extension",
+    "type": "symfony-bundle",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": { "MR\\SwarrotExtensionBundle\\": "" }
+    },
+    "require": {
+        "php": "^7.2",
+        "ext-json": "*",
+        "psr/log": "~1.0",
+        "swarrot/swarrot": "^3.7",
+        "swarrot/swarrot-bundle": "^1.7",
+        "symfony/framework-bundle": "^4.0|^5.0",
+        "symfony/validator": "^4.0|^5.0",
+        "symfony/property-access": "^4.0|^5.0",
+        "symfony/event-dispatcher": "^4.0|^5.0",
+        "symfony/debug": "^4.0",
+        "odolbeau/rabbit-mq-admin-toolkit": "^4.0|^5.0"
+    },
+    "require-dev": {
+        "phpmd/phpmd": "2.8.*",
+        "phpunit/phpunit": "8.0.*",
+        "slevomat/coding-standard": "6.1.*",
+        "squizlabs/php_codesniffer": "3.5.*",
+        "php-amqplib/php-amqplib": "^2.7"
+    }
+}

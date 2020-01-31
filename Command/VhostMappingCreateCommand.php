@@ -1,0 +1,80 @@
+<?php
+
+declare(strict_types=1);
+
+namespace MR\SwarrotExtensionBundle\Command;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Bab\RabbitMq\Configuration;
+use Bab\RabbitMq\Action\RealAction;
+use Bab\RabbitMq\HttpClient\CurlClient;
+use Bab\RabbitMq\Logger\CliLogger;
+use Bab\RabbitMq\VhostManager;
+
+class VhostMappingCreateCommand extends Command
+{
+    /** @var string */
+    private $rabbitmqHost;
+
+    /** @var int */
+    private $rabbitmqPort;
+
+    /** @var string */
+    private $rabbitmqLogin;
+
+    /** @var string */
+    private $rabbitmqPassword;
+
+    public function __construct(string $rabbitmqHost, int $rabbitmqPort, string $rabbitmqLogin, string $rabbitmqPassword)
+    {
+        parent::__construct();
+
+        $this->rabbitmqHost = $rabbitmqHost;
+        $this->rabbitmqPort = $rabbitmqPort;
+        $this->rabbitmqLogin = $rabbitmqLogin;
+        $this->rabbitmqPassword = $rabbitmqPassword;
+    }
+
+    protected function configure()
+    {
+        $this->setName('swarrot_extension:vhost:mapping:create')
+            ->setDescription('Create a vhost from a configuration file')
+            ->addArgument('filepath', InputArgument::REQUIRED, 'Path to the configuration file');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $configuration = new Configuration\Yaml($input->getArgument('filepath'));
+        $vhost = $configuration->getVhost();
+        $vhostManager = $this->getVhostManager($output, $vhost);
+        $vhostManager->createMapping($configuration);
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param int|null|string $vhost
+     *
+     * @return VhostManager
+     */
+    private function getVhostManager(OutputInterface $output, $vhost)
+    {
+        $credentials = [
+            'vhost' => $vhost,
+            'host' => $this->rabbitmqHost,
+            'port' => $this->rabbitmqPort,
+            'user' => $this->rabbitmqLogin,
+            'password' => $this->rabbitmqPassword,
+        ];
+        $httpClient = new CurlClient($credentials['host'], $credentials['port'], $credentials['user'], $credentials['password']);
+        $action = new RealAction($httpClient);
+        $logger = new CliLogger($output);
+        $action->setLogger($logger);
+        $vhostManager = new VhostManager($credentials, $action, $httpClient);
+        $vhostManager->setLogger($logger);
+
+        return $vhostManager;
+    }
+}

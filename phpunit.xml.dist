@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         bootstrap="./vendor/autoload.php"
+>
+    <php>
+        <env name="ENV" value="test" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=1" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Test Suite">
+            <directory>./Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>.</directory>
+            <exclude>
+                <directory>bin</directory>
+                <directory>vendor</directory>
+                <directory>Tests</directory>
+                <directory>Resources</directory>
+                <directory>DependencyInjection</directory>
+                <directory>Broker/Exception</directory>
+                <directory>Broker/Processor/Configurator</directory>
+                <directory>Broker/Processor/Event</directory>
+                <file>SwarrotExtensionBundle.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
