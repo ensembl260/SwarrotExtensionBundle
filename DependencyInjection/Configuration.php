@@ -16,10 +16,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('swarrot_extension', 'array');
+        $treeBuilder = new TreeBuilder('swarrot_extension', 'array');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->arrayNode('admin_connection')
                     ->children()
