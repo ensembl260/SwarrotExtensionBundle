@@ -1,10 +1,12 @@
 {
-    "name": "mr/swarrot-extension-bundle",
+    "name": "ma-residence/swarrot-extension-bundle",
     "description": "SwarrotBundle extension",
     "type": "symfony-bundle",
     "license": "proprietary",
     "autoload": {
-        "psr-4": { "MR\\SwarrotExtensionBundle\\": "" }
+        "psr-4": {
+            "MR\\SwarrotExtensionBundle\\": ""
+        }
     },
     "require": {
         "php": "^7.3|^7.4",
