@@ -26,5 +26,4 @@ install:
 
 script:
   - composer validate --strict --no-check-lock
-  - ./vendor/bin/php
-  - ./vendor/bin/phpmd src/ text phpmd.xml --suffixes php
+  - ./vendor/bin/phpunit
