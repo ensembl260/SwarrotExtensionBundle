@@ -10,3 +10,4 @@ CHANGELOG for 1.0.x
 
 ## 1.0.3
 [FIX #8 : Fix use in SwarrotExtensionBundle](https://github.com/ma-residence/SwarrotExtensionBundle/issues/8)
+[ENHANCEMENT #9: Remove deprecated DefinitionDecorator](https://github.com/ma-residence/SwarrotExtensionBundle/issues/9)
