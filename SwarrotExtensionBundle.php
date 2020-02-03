@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MR\SwarrotExtensionBundle;
 
-use Mr\SwarrotExtensionBundle\DependencyInjection\CompilerPass\BrokerProcessorPass;
+use MR\SwarrotExtensionBundle\DependencyInjection\CompilerPass\BrokerProcessorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

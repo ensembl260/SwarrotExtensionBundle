@@ -9,3 +9,4 @@ CHANGELOG for 1.0.x
 [v1.0.2: fix bundle name](https://github.com/ma-residence/SwarrotExtensionBundle/commit/a01ebd37262840ec7951a29cd75d775c1baf8fa6)
 
 ## 1.0.3
+[FIX #8 : Fix use in SwarrotExtensionBundle](https://github.com/ma-residence/SwarrotExtensionBundle/issues/8)
