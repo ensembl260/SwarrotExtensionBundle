@@ -8,6 +8,12 @@ services:
         calls:
             - ['setLogger', ['@logger']]
 
+    swarrot_extension.processor.doctrine_document_manager:
+        class: Swarrot\SwarrotBundle\Processor\Doctrine\ObjectManagerProcessorConfigurator
+        arguments:
+            - 'Swarrot\Processor\Doctrine\ObjectManagerProcessor'
+            - '@?doctrine_mongodb'
+
     swarrot_extension.processor.unrecoverable_exception:
         class: MR\SwarrotExtensionBundle\Broker\Processor\Configurator\UnrecoverableExceptionProcessorConfigurator
         arguments:
