@@ -14,3 +14,4 @@ CHANGELOG for 1.0.x
 [FIX #13: Fix Configuration TreeBuilder __constructor()](https://github.com/ma-residence/SwarrotExtensionBundle/issues/13)
 
 ## 1.0.4
+[FIX #16: Fix PHP version](https://github.com/ma-residence/SwarrotExtensionBundle/issues/16)
