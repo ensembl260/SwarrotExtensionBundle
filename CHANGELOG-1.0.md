@@ -12,3 +12,7 @@ CHANGELOG for 1.0.x
 [FIX #8 : Fix use in SwarrotExtensionBundle](https://github.com/ma-residence/SwarrotExtensionBundle/issues/8)
 [ENHANCEMENT #9: Remove deprecated DefinitionDecorator](https://github.com/ma-residence/SwarrotExtensionBundle/issues/9)
 [FIX #13: Fix Configuration TreeBuilder __constructor()](https://github.com/ma-residence/SwarrotExtensionBundle/issues/13)
+
+## 1.0.4
+[FIX #16: Fix PHP version](https://github.com/ma-residence/SwarrotExtensionBundle/issues/16)
+[FIX # 15: Fix typehint return VhostMappingCreateCommand::execute](https://github.com/ma-residence/SwarrotExtensionBundle/issues/15)

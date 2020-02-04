@@ -38,19 +38,21 @@ class VhostMappingCreateCommand extends Command
         $this->rabbitmqPassword = $rabbitmqPassword;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('swarrot_extension:vhost:mapping:create')
             ->setDescription('Create a vhost from a configuration file')
             ->addArgument('filepath', InputArgument::REQUIRED, 'Path to the configuration file');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $configuration = new Configuration\Yaml($input->getArgument('filepath'));
         $vhost = $configuration->getVhost();
         $vhostManager = $this->getVhostManager($output, $vhost);
         $vhostManager->createMapping($configuration);
+
+        return 0;
     }
 
     /**
@@ -59,7 +61,7 @@ class VhostMappingCreateCommand extends Command
      *
      * @return VhostManager
      */
-    private function getVhostManager(OutputInterface $output, $vhost)
+    private function getVhostManager(OutputInterface $output, $vhost): VhostManager
     {
         $credentials = [
             'vhost' => $vhost,
