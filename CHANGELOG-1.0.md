@@ -15,3 +15,4 @@ CHANGELOG for 1.0.x
 
 ## 1.0.4
 [FIX #16: Fix PHP version](https://github.com/ma-residence/SwarrotExtensionBundle/issues/16)
+[FIX # 15: Fix typehint return VhostMappingCreateCommand::execute](https://github.com/ma-residence/SwarrotExtensionBundle/issues/15)
