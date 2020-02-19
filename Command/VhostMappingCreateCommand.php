@@ -70,6 +70,7 @@ class VhostMappingCreateCommand extends Command
             'user' => $this->rabbitmqLogin,
             'password' => $this->rabbitmqPassword,
         ];
+
         $httpClient = new CurlClient($credentials['host'], $credentials['port'], $credentials['user'], $credentials['password']);
         $action = new RealAction($httpClient);
         $logger = new CliLogger($output);

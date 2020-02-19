@@ -6,23 +6,11 @@ namespace MR\SwarrotExtensionBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class SwarrotExtensionExtension extends Extension implements PrependExtensionInterface
+class SwarrotExtensionExtension extends Extension
 {
-    public function prepend(ContainerBuilder $container): void
-    {
-        $defaultConnectionConfiguration = $this->getDefaultConnectionConfiguration($container);
-
-        // configure admin connection parameters from swarrot default connection configuration
-        $config['admin_connection']['host'] = $defaultConnectionConfiguration['host'];
-        $config['admin_connection']['login'] = $defaultConnectionConfiguration['login'];
-        $config['admin_connection']['password'] = $defaultConnectionConfiguration['password'];
-        $container->prependExtensionConfig('swarrot_extension', $config);
-    }
-
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
