@@ -10,6 +10,7 @@ php:
   - '7.4'
 
 env:
+  - SYMFONY_VERSION=3.4.*
   - SYMFONY_VERSION=4.0.*
   - SYMFONY_VERSION=4.1.*
   - SYMFONY_VERSION=4.2.*
