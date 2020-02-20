@@ -27,3 +27,6 @@ CHANGELOG for 1.x
 
 #### 1.1.1
 - Feature [#24](https://github.com/ma-residence/SwarrotExtensionBundle/issues/24): Add support for symfony 3.4
+
+#### 1.1.2
+- Fix [#27](https://github.com/ma-residence/SwarrotExtensionBundle/issues/27): Update Configuration.php for Symfony compatibility 3.4
