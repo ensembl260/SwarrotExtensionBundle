@@ -24,3 +24,5 @@ CHANGELOG for 1.x
 ## 1.1.x
 #### 1.1.0
 - [Feature #22: Remove prepend configuration](https://github.com/ma-residence/SwarrotExtensionBundle/issues/22)
+
+#### 1.1.1
