@@ -13,7 +13,7 @@
         "ext-json": "*",
         "psr/log": "~1.0",
         "swarrot/swarrot": "^3.7",
-        "swarrot/swarrot-bundle": "^1.7",
+        "swarrot/swarrot-bundle": "^1.5",
         "symfony/framework-bundle": "^3.4|^4.0|^5.0",
         "symfony/validator": "^3.4|^4.0|^5.0",
         "symfony/property-access": "^3.4|^4.0|^5.0",

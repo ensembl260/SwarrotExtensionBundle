@@ -30,3 +30,4 @@ CHANGELOG for 1.x
 
 #### 1.1.2
 - Fix [#27](https://github.com/ma-residence/SwarrotExtensionBundle/issues/27): Update Configuration.php for Symfony compatibility 3.4
+- Chore [#29](https://github.com/ma-residence/SwarrotExtensionBundle/issues/29): Update swarrot-bundle version
