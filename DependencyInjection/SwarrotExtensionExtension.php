@@ -19,8 +19,9 @@ class SwarrotExtensionExtension extends Extension
         $container->setParameter('swarrot_extension.error_publisher.routing_key_pattern', $config['error_publisher']['routing_key_pattern']);
 
         $url = $container->resolveEnvPlaceholders($config['admin_connection']['url'], true);
+        $host = $port = $login = $password = null;
 
-        if ($config['admin_connection']['url']) {
+        if ($url) {
             $parsedUrl = parse_url($config['admin_connection']['url']);
 
             $host = $parsedUrl['host'] ?? null;
@@ -31,19 +32,19 @@ class SwarrotExtensionExtension extends Extension
 
         $container->setParameter(
             'swarrot_extension.admin_connection.host',
-            $container->resolveEnvPlaceholders($config['admin_connection']['host'], true) ?? $host,
+            $config['admin_connection']['host'] ? $container->resolveEnvPlaceholders($config['admin_connection']['host'], true) : $host,
         );
         $container->setParameter(
             'swarrot_extension.admin_connection.port',
-            $container->resolveEnvPlaceholders($config['admin_connection']['port'], true) ?? $port,
+            $config['admin_connection']['port'] ? $container->resolveEnvPlaceholders($config['admin_connection']['port'], true) : $port,
         );
         $container->setParameter(
             'swarrot_extension.admin_connection.login',
-            $container->resolveEnvPlaceholders($config['admin_connection']['login'], true) ?? $login,
+            $config['admin_connection']['login'] ? $container->resolveEnvPlaceholders($config['admin_connection']['login'], true) : $login,
         );
         $container->setParameter(
             'swarrot_extension.admin_connection.password',
-            $container->resolveEnvPlaceholders($config['admin_connection']['password'], true) ?? $password,
+            $config['admin_connection']['password'] ? $container->resolveEnvPlaceholders($config['admin_connection']['password'], true) : $password,
         );
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
