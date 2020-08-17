@@ -37,3 +37,6 @@ Fail release
 
 #### 1.1.4
 - Chore [#29](https://github.com/ma-residence/SwarrotExtensionBundle/issues/29): Update swarrot-bundle version
+
+### 1.1.5
+- Feature [#32](https://github.com/ma-residence/SwarrotExtensionBundle/issues/32): Add url property in admin_connection
