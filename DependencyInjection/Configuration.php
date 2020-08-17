@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('port')->defaultValue(null)->end()
                         ->scalarNode('login')->defaultValue(null)->end()
                         ->scalarNode('password')->defaultValue(null)->end()
-                        ->scalarNode('url')->end()
+                        ->scalarNode('url')->defaultValue(null)->end()
                     ->end()
                 ->end()
                 ->scalarNode('message_factory')->defaultValue('swarrot_extension.publisher.message_factory.default')->end()
