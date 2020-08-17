@@ -30,10 +30,10 @@ class SwarrotExtensionExtension extends Extension
             $password = $parsedUrl['password'] ?? null;
         }
 
-        $container->setParameter(
-            'swarrot_extension.admin_connection.host',
-            $config['admin_connection']['host'] ? $container->resolveEnvPlaceholders($config['admin_connection']['host'], true) : $host,
-        );
+        $formattedHost = $config['admin_connection']['protocol'] ? $config['admin_connection']['protocol'].'://' : '';
+        $formattedHost += $config['admin_connection']['host'] ? $container->resolveEnvPlaceholders($config['admin_connection']['host'], true) : $host;
+
+        $container->setParameter('swarrot_extension.admin_connection.host', $formattedHost);
         $container->setParameter(
             'swarrot_extension.admin_connection.port',
             $config['admin_connection']['port'] ? $container->resolveEnvPlaceholders($config['admin_connection']['port'], true) : $port,

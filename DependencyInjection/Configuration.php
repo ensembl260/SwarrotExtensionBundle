@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('admin_connection')
                     ->children()
+                        ->scalarNode('protocol')->defaultValue(null)->end()
                         ->scalarNode('host')->defaultValue('127.0.0.1')->end()
                         ->scalarNode('port')->defaultValue('15672')->end()
                         ->scalarNode('login')->defaultValue('guest')->end()
