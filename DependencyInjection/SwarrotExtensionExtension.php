@@ -18,21 +18,33 @@ class SwarrotExtensionExtension extends Extension
         $container->setAlias('swarrot_extension.error.publisher', $config['error_publisher']['service']);
         $container->setParameter('swarrot_extension.error_publisher.routing_key_pattern', $config['error_publisher']['routing_key_pattern']);
 
-        $host = $port = $login = $password = null;
+        $url = $container->resolveEnvPlaceholders($config['admin_connection']['url'], true);
 
         if ($config['admin_connection']['url']) {
             $parsedUrl = parse_url($config['admin_connection']['url']);
 
-            $host = $parsedUrl['user'];
-            $port = $parsedUrl['port'];
-            $login = $parsedUrl['user'];
-            $password = $parsedUrl['user'];
+            $host = $parsedUrl['host'] ?? null;
+            $port = $parsedUrl['port'] ?? null;
+            $login = $parsedUrl['user'] ?? null;
+            $password = $parsedUrl['password'] ?? null;
         }
 
-        $container->setParameter('swarrot_extension.admin_connection.host', $config['admin_connection']['host'] ?? $host);
-        $container->setParameter('swarrot_extension.admin_connection.port', $config['admin_connection']['port'] ?? $port);
-        $container->setParameter('swarrot_extension.admin_connection.login', $config['admin_connection']['login'] ?? $login);
-        $container->setParameter('swarrot_extension.admin_connection.password', $config['admin_connection']['password'] ?? $password);
+        $container->setParameter(
+            'swarrot_extension.admin_connection.host',
+            $container->resolveEnvPlaceholders($config['admin_connection']['host'], true) ?? $host,
+        );
+        $container->setParameter(
+            'swarrot_extension.admin_connection.port',
+            $container->resolveEnvPlaceholders($config['admin_connection']['port'], true) ?? $port,
+        );
+        $container->setParameter(
+            'swarrot_extension.admin_connection.login',
+            $container->resolveEnvPlaceholders($config['admin_connection']['login'], true) ?? $login,
+        );
+        $container->setParameter(
+            'swarrot_extension.admin_connection.password',
+            $container->resolveEnvPlaceholders($config['admin_connection']['password'], true) ?? $password,
+        );
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
