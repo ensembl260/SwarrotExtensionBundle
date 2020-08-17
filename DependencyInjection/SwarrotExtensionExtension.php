@@ -18,10 +18,21 @@ class SwarrotExtensionExtension extends Extension
         $container->setAlias('swarrot_extension.error.publisher', $config['error_publisher']['service']);
         $container->setParameter('swarrot_extension.error_publisher.routing_key_pattern', $config['error_publisher']['routing_key_pattern']);
 
-        $container->setParameter('swarrot_extension.admin_connection.host', $config['admin_connection']['host']);
-        $container->setParameter('swarrot_extension.admin_connection.port', $config['admin_connection']['port']);
-        $container->setParameter('swarrot_extension.admin_connection.login', $config['admin_connection']['login']);
-        $container->setParameter('swarrot_extension.admin_connection.password', $config['admin_connection']['password']);
+        $host = $port = $login = $password = null;
+
+        if ($config['admin_connection']['url']) {
+            $parsedUrl = parse_url($config['admin_connection']['url']);
+
+            $host = $parsedUrl['user'];
+            $port = $parsedUrl['port'];
+            $login = $parsedUrl['user'];
+            $password = $parsedUrl['user'];
+        }
+
+        $container->setParameter('swarrot_extension.admin_connection.host', $config['admin_connection']['host'] ?? $host);
+        $container->setParameter('swarrot_extension.admin_connection.port', $config['admin_connection']['port'] ?? $port);
+        $container->setParameter('swarrot_extension.admin_connection.login', $config['admin_connection']['login'] ?? $login);
+        $container->setParameter('swarrot_extension.admin_connection.password', $config['admin_connection']['password'] ?? $password);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
