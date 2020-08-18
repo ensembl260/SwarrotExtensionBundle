@@ -18,67 +18,75 @@ class SwarrotExtensionExtension extends Extension
         $container->setAlias('swarrot_extension.error.publisher', $config['error_publisher']['service']);
         $container->setParameter('swarrot_extension.error_publisher.routing_key_pattern', $config['error_publisher']['routing_key_pattern']);
 
-        $url = $container->resolveEnvPlaceholders($config['admin_connection']['url'], true);
-        $host = $port = $login = $password = null;
+        $adminConfig = $this->buildAdminConnection($config, $container);
 
-        if ($url) {
-            $parsedUrl = parse_url($config['admin_connection']['url']);
-
-            $host = $parsedUrl['host'] ?? null;
-            $port = $parsedUrl['port'] ?? null;
-            $login = $parsedUrl['user'] ?? null;
-            $password = $parsedUrl['password'] ?? null;
-        }
-
-        $formattedHost = $config['admin_connection']['protocol'] ? $config['admin_connection']['protocol'].'://' : '';
-        $formattedHost .= $config['admin_connection']['host'] ? $container->resolveEnvPlaceholders($config['admin_connection']['host'], true) : $host;
-        $container->setParameter('swarrot_extension.admin_connection.host', $formattedHost);
-
-        $container->setParameter(
-            'swarrot_extension.admin_connection.port',
-            $config['admin_connection']['port'] ? $container->resolveEnvPlaceholders($config['admin_connection']['port'], true) : $port,
-        );
-        $container->setParameter(
-            'swarrot_extension.admin_connection.login',
-            $config['admin_connection']['login'] ? $container->resolveEnvPlaceholders($config['admin_connection']['login'], true) : $login,
-        );
-        $container->setParameter(
-            'swarrot_extension.admin_connection.password',
-            $config['admin_connection']['password'] ? $container->resolveEnvPlaceholders($config['admin_connection']['password'], true) : $password,
-        );
+        $container->setParameter('swarrot_extension.admin_connection.host', $adminConfig['host']);
+        $container->setParameter('swarrot_extension.admin_connection.port', $adminConfig['port']);
+        $container->setParameter('swarrot_extension.admin_connection.login', $adminConfig['login']);
+        $container->setParameter('swarrot_extension.admin_connection.password', $adminConfig['password']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
 
-    private function getDefaultConnectionConfiguration(ContainerBuilder $container): array
+    private function buildAdminConnection(array $config, ContainerBuilder $container): array
     {
-        $bundles = $container->getParameter('kernel.bundles');
-        if (!isset($bundles['SwarrotBundle'])) {
-            throw new \InvalidArgumentException('Swarrot bundle is required.');
+        $adminConnection = [
+            'host' => '127.0.0.1',
+            'port' => '15672',
+            'login' => 'guest',
+            'password' => 'guest',
+        ];
+
+        if (!$config['admin_connection']) {
+            return $adminConnection;
         }
 
-        $swarrotConfigs = $container->getExtensionConfig('swarrot');
-        if (\count($swarrotConfigs) < 1) {
-            throw new \InvalidArgumentException('Swarrot bundle configuration is not set. Please check swarrot bundle configuration.');
-        }
+        $adminConnectionConfig = $config['admin_connection'];
+        $parsedUrl = parse_url($container->resolveEnvPlaceholders($adminConnectionConfig['url'], true));
 
-        $firstSwarrotConfig = $swarrotConfigs[0];
-        if (!isset($firstSwarrotConfig['default_connection'])) {
-            throw new \InvalidArgumentException('A default connection is missing in swarrot bundle configuration.');
-        }
+        $adminConnection['host'] = $this->buildAdminHost($parsedUrl, $adminConnectionConfig);
+        $adminConnection['port'] = $this->buildAdminPort($parsedUrl, $adminConnectionConfig);
+        $adminConnection['login'] = $this->buildAdminLogin($parsedUrl, $adminConnectionConfig);
+        $adminConnection['password'] = $this->buildAdminPassword($parsedUrl, $adminConnectionConfig);
 
-        $defaultConnectionConfiguration = [];
-        foreach ($firstSwarrotConfig['connections'] as $connectionName => $connectionConfiguration) {
-            if ($connectionName === $firstSwarrotConfig['default_connection']) {
-                $defaultConnectionConfiguration = $connectionConfiguration;
-            }
-        }
+        return $adminConnection;
+    }
 
-        if (!$defaultConnectionConfiguration) {
-            throw new \InvalidArgumentException('Cannot found swarrot configuration for default connection. Please check swarrot bundle configuration.');
-        }
+    private function buildAdminHost(array $parsedUrl, array $config): string
+    {
+        $host = '127.0.0.1';
 
-        return $defaultConnectionConfiguration;
+        $host = $parsedUrl['host'] ?? $host;
+        $host = $config['host'] ?? $host;
+
+        return $config['force_ssl'] ? 'https://'.$host : 'http://'.$host;
+    }
+
+    private function buildAdminPort(array $parsedUrl, array $config): string
+    {
+        $port = '15672';
+        $port = $parsedUrl['port'] ?? $port;
+        $port = $config['port'] ?? $port;
+
+        return (string) $port;
+    }
+
+    private function buildAdminLogin(array $parsedUrl, array $config): string
+    {
+        $login = 'guest';
+        $login = $parsedUrl['login'] ?? $login;
+        $login = $config['login'] ?? $login;
+
+        return $login;
+    }
+
+    private function buildAdminPassword(array $parsedUrl, array $config): string
+    {
+        $password = 'guest';
+        $password = $parsedUrl['password'] ?? $password;
+        $password = $config['password'] ?? $password;
+
+        return $password;
     }
 }
