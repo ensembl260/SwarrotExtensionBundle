@@ -75,7 +75,7 @@ class SwarrotExtensionExtension extends Extension
     private function buildAdminLogin(array $parsedUrl, array $config): string
     {
         $login = 'guest';
-        $login = $parsedUrl['login'] ?? $login;
+        $login = $parsedUrl['user'] ?? $login;
         $login = $config['login'] ?? $login;
 
         return $login;
@@ -84,7 +84,7 @@ class SwarrotExtensionExtension extends Extension
     private function buildAdminPassword(array $parsedUrl, array $config): string
     {
         $password = 'guest';
-        $password = $parsedUrl['password'] ?? $password;
+        $password = $parsedUrl['pass'] ?? $password;
         $password = $config['password'] ?? $password;
 
         return $password;
