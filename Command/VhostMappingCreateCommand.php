@@ -28,7 +28,7 @@ class VhostMappingCreateCommand extends Command
     /** @var string */
     private $rabbitmqPassword;
 
-    public function __construct(string $rabbitmqHost, int $rabbitmqPort, string $rabbitmqLogin, string $rabbitmqPassword)
+    public function __construct(string $rabbitmqHost, string $rabbitmqPort, string $rabbitmqLogin, string $rabbitmqPassword)
     {
         parent::__construct();
 

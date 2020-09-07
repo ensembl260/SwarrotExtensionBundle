@@ -5,7 +5,6 @@ namespace MR\SwarrotExtensionBundle\Broker\Consumer;
 use MR\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
 use Swarrot\Broker\Message;
 
-
 trait ConsumerJsonDataTrait
 {
     /**
@@ -17,7 +16,7 @@ trait ConsumerJsonDataTrait
      */
     public function getData(Message $message, array $options)
     {
-        $data = json_decode($message->getBody(), true);
+        $data = json_decode($message->getBody(), true, 512);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new InvalidDataException(sprintf('JSON error: "%s". Valid json expected.', json_last_error_msg()));
