@@ -66,7 +66,7 @@ class VhostMappingCreateCommand extends Command
         $credentials = [
             'vhost' => $vhost,
             'host' => $this->rabbitmqHost,
-            'port' => $this->rabbitmqPort,
+            'port' => (int) $this->rabbitmqPort,
             'user' => $this->rabbitmqLogin,
             'password' => $this->rabbitmqPassword,
         ];
