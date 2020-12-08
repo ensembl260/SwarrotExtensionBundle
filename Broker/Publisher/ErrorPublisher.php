@@ -8,27 +8,16 @@ use MR\SwarrotExtensionBundle\Broker\Exception\UnrecoverableException;
 use MR\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Error\FatalError;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class ErrorPublisher implements ErrorPublisherInterface
 {
     private const MESSAGE_TYPE = 'error';
 
-    /**
-     * @var PublisherInterface
-     */
-    private $publisher;
-
-    /**
-     * @var string
-     */
-    private $routingKey;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
+    private PublisherInterface $publisher;
+    private string $routingKey;
+    private SerializerInterface $serializer;
 
     public function __construct(
         PublisherInterface $publisher,
@@ -166,13 +155,13 @@ class ErrorPublisher implements ErrorPublisherInterface
 
     /**
      * @param string $messageType
-     * @param mixed $data
-     * @param array $messageProperties
-     * @param array $overridenConfig
+     * @param mixed[] $data
+     * @param mixed[] $messageProperties
+     * @param mixed[] $overridenConfig
      *
      * @throws PublishException
      */
-    private function publish(string $messageType, $data, array $messageProperties = [], array $overridenConfig = []): void
+    private function publish(string $messageType, array $data, array $messageProperties = [], array $overridenConfig = []): void
     {
         $this->publisher->publish(
             $messageType,
@@ -185,18 +174,13 @@ class ErrorPublisher implements ErrorPublisherInterface
     private function flattenException(\Throwable $exception): FlattenException
     {
         if (!$exception instanceof \Exception) {
-            $exception = new FatalThrowableError($exception);
+            $exception = new FatalError($exception->getMessage(), $exception->getCode(),error_get_last());
         }
 
         return FlattenException::create($exception);
     }
 
-    /**
-     * @param object $object
-     *
-     * @return string
-     */
-    private function getRoutingKey($object): string
+    private function getRoutingKey(object $object): string
     {
         switch (true) {
             case $object instanceof XDeathEvent:

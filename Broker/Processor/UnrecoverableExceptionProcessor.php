@@ -7,6 +7,8 @@ namespace MR\SwarrotExtensionBundle\Broker\Processor;
 use MR\SwarrotExtensionBundle\Broker\Exception\UnrecoverableConsumerException;
 use MR\SwarrotExtensionBundle\Broker\Exception\UnrecoverableException;
 use MR\SwarrotExtensionBundle\Broker\Publisher\ErrorPublisher;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Swarrot\Processor\ProcessorInterface;
 use Swarrot\Broker\Message;
@@ -15,34 +17,20 @@ use Psr\Log\LoggerInterface;
 /**
  * @internal
  */
-final class UnrecoverableExceptionProcessor
+final class UnrecoverableExceptionProcessor implements LoggerAwareInterface
 {
-    /**
-     * @var ProcessorInterface
-     */
-    protected $processor;
+    use LoggerAwareTrait;
 
-    /**
-     * @var ErrorPublisher
-     */
-    private $errorPublisher;
+    protected ProcessorInterface $processor;
+    private ErrorPublisher $errorPublisher;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    public function __construct(
-        ProcessorInterface $processor,
-        ErrorPublisher $errorPublisher,
-        LoggerInterface $logger = null
-    ) {
+    public function __construct(ProcessorInterface $processor, ErrorPublisher $errorPublisher) {
         $this->processor = $processor;
         $this->errorPublisher = $errorPublisher;
-        $this->logger = $logger ?: new NullLogger();
+        $this->setLogger(new NullLogger());
     }
 
-    public function process(Message $message, array $options)
+    public function process(Message $message, array $options): bool
     {
         try {
             return $this->processor->process($message, $options);

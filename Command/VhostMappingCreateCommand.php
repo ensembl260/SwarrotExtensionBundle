@@ -16,17 +16,10 @@ use Bab\RabbitMq\VhostManager;
 
 class VhostMappingCreateCommand extends Command
 {
-    /** @var string */
-    private $rabbitmqHost;
-
-    /** @var int */
-    private $rabbitmqPort;
-
-    /** @var string */
-    private $rabbitmqLogin;
-
-    /** @var string */
-    private $rabbitmqPassword;
+    private string $rabbitmqHost;
+    private string $rabbitmqPort;
+    private string $rabbitmqLogin;
+    private string $rabbitmqPassword;
 
     public function __construct(string $rabbitmqHost, string $rabbitmqPort, string $rabbitmqLogin, string $rabbitmqPassword)
     {

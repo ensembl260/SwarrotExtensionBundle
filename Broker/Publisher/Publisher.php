@@ -14,15 +14,8 @@ class Publisher implements PublisherInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var SwarrotPublisher
-     */
-    private $publisher;
-
-    /**
-     * @var MessageFactoryInterface
-     */
-    private $messageFactory;
+    private SwarrotPublisher $publisher;
+    private MessageFactoryInterface $messageFactory;
 
     public function __construct(
         SwarrotPublisher $publisher,

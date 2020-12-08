@@ -11,10 +11,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class BrokerProcessorPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has('swarrot_extension.processor.abstract')) {
             return;

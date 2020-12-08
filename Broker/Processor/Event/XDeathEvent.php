@@ -12,25 +12,10 @@ final class XDeathEvent extends Event
     public const MAX_LIFETIME_REACHED = 'xdeath.max_lifetime_reached';
     public const MAX_COUNT_REACHED = 'xdeath.max_count_reached';
 
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var \Throwable
-     */
-    private $exception;
-
-    /**
-     * @var Message
-     */
-    private $message;
-
-    /**
-     * @var array
-     */
-    private $options;
+    private string $type;
+    private \Throwable $exception;
+    private Message $message;
+    private array $options;
 
     public function __construct(string $type, \Throwable $exception, Message $message, array $options)
     {

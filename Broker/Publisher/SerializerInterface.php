@@ -6,12 +6,5 @@ namespace MR\SwarrotExtensionBundle\Broker\Publisher;
 
 interface SerializerInterface
 {
-    /**
-     * @param mixed $data
-     * @param mixed $format
-     * @param array $context
-     *
-     * @return mixed
-     */
-    public function serialize($data, $format, array $context = []);
+    public function serialize(array $data, string $format, array $context = []): string;
 }

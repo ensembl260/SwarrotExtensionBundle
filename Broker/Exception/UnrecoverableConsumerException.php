@@ -8,23 +8,17 @@ use Swarrot\Broker\Message;
 
 class UnrecoverableConsumerException extends UnrecoverableException
 {
-    /**
-     * @var Message
-     */
-    private $brokerMessage;
+    private Message $brokerMessage;
+    private bool $rethrow;
+    private bool $killConsumer;
 
-    /**
-     * @var bool
-     */
-    private $rethrow;
-
-    /**
-     * @var bool
-     */
-    private $killConsumer;
-
-    public function __construct(Message $brokerMessage, string $message = null, \Throwable $previous = null, bool $rethrow = false, bool $killConsumer = false)
-    {
+    public function __construct(
+        Message $brokerMessage,
+        string $message = null,
+        \Throwable $previous = null,
+        bool $rethrow = false,
+        bool $killConsumer = false
+    ) {
         parent::__construct($message, 0, $previous);
 
         $this->brokerMessage = $brokerMessage;

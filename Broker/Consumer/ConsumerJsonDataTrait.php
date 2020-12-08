@@ -14,14 +14,12 @@ trait ConsumerJsonDataTrait
      * @return mixed
      * @throws \Exception
      */
-    public function getData(Message $message, array $options)
+    public function getData(Message $message, array $options): array
     {
-        $data = json_decode($message->getBody(), true, 512);
-
-        if (JSON_ERROR_NONE !== json_last_error()) {
+        try {
+            return json_decode($message->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Throwable $exception) {
             throw new InvalidDataException(sprintf('JSON error: "%s". Valid json expected.', json_last_error_msg()));
         }
-
-        return $data;
     }
 }

@@ -64,14 +64,6 @@ services:
         calls:
             - ['setLogger', ['@logger']]
 
-    swarrot_extension.spooled_publisher:
-        class: MR\SwarrotExtensionBundle\Broker\Publisher\SpooledPublisher
-        arguments:
-            - '@swarrot.publisher'
-            - '@swarrot_extension.message_factory'
-        calls:
-            - ['setLogger', ['@logger']]
-
     swarrot_extension.error_publisher.default:
         class: MR\SwarrotExtensionBundle\Broker\Publisher\ErrorPublisher
         arguments:

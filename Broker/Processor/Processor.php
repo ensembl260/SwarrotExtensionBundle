@@ -30,20 +30,9 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var ConsumerInterface
-     */
-    private $consumer;
-
-    /**
-     * @var string
-     */
-    private $consumerClass;
-
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
+    private ConsumerInterface $consumer;
+    private string $consumerClass;
+    private ValidatorInterface $validator;
 
     public function __construct(
         ConsumerInterface $consumer,
@@ -59,13 +48,13 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
      * get/decode -> support -> validate -> consume
      *
      * @param Message $message
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return void|bool
      *
      * @throws \Exception
      */
-    public function process(Message $message, array $options)
+    public function process(Message $message, array $options): bool
     {
         $this->logger->info('Start consuming message #{message_id}.', ['message_id' => $message->getId(), 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
 
@@ -74,7 +63,7 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
         } catch (InvalidDataException $exception) {
             $this->logger->error($exception->getMessage(), ['exception' => $exception, 'message_id' => $message->getId(), 'message_properties' => $message->getProperties(), 'message_body' => $message->getBody(), 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
 
-            return;
+            return true;
         }
 
         if ($this->consumer instanceof SupportConsumerInterface) {
@@ -82,7 +71,7 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
                 if (!$this->consumer->supportData($data, $message, $options)) {
                     $this->logger->info('Consumer not support message.', ['message_id' => $message->getId(), 'message_properties' => $message->getProperties(), 'message_body' => $message->getBody(), 'data' => $data, 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
 
-                    return;
+                    return true;
                 }
                 $this->logger->info('Consumer support message.', ['message_id' => $message->getId(), 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
             } catch (\Exception $exception) {
@@ -101,14 +90,14 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
                     if (0 < count($violations)) {
                         $this->logger->warning('Invalid data for consumer.', ['violations' => $violations, 'message_id' => $message->getId(), 'data' => $data, 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
 
-                        return;
+                        return true;
                     }
                     $this->logger->info('Valid data for consumer.', ['message_id' => $message->getId(), 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
                 }
             } catch (UnexpectedTypeException $exception) {
                 $this->logger->error('UnexpectedTypeException during data validation.', ['exception' => $exception, 'message_id' => $message->getId(), 'data' => $data, 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
 
-                return;
+                return true;
             } catch (\Exception $exception) {
                 $this->logger->error('Exception during data validation.', ['exception' => $exception, 'message_id' => $message->getId(), 'data' => $data, 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
 

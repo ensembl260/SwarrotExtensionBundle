@@ -11,12 +11,12 @@ use Symfony\Component\Validator\Exception\ValidatorException;
 interface ConstraintConsumerInterface
 {
     /**
-     * @param mixed $data
+     * @param mixed[] $data
      * @param Message $message
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return Constraint[]
      * @throws ValidatorException
      */
-    public function getConstraints($data, Message $message, array $options): array;
+    public function getConstraints(array $data, Message $message, array $options): array;
 }

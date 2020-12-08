@@ -13,10 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 final class XDeathErrorPublisherSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ErrorPublisher
-     */
-    private $publisher;
+    private ErrorPublisher $publisher;
 
     public function __construct(ErrorPublisher $publisher)
     {

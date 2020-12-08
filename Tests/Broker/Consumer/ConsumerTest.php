@@ -105,7 +105,7 @@ class Consumer implements ConsumerInterface, ConstraintConsumerInterface, Suppor
         ];
     }
 
-    public function consumeData($data, Message $message, array $options)
+    public function consumeData(array $data, Message $message, array $options): bool
     {
         return $data['consumed'] === true;
     }
@@ -115,7 +115,8 @@ class Consumer implements ConsumerInterface, ConstraintConsumerInterface, Suppor
         return $data['supported'] === true;
     }
 
-    public function getData(Message $message, array $options)
+    public function getData(Message $message, array $options): array
     {
+        return [];
     }
 }

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace MR\SwarrotExtensionBundle\Broker\Processor\Configurator;
 
 use MR\SwarrotExtensionBundle\Broker\Publisher\ErrorPublisher;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Swarrot\SwarrotBundle\Processor\ProcessorConfiguratorEnableAware;
 use Swarrot\SwarrotBundle\Processor\ProcessorConfiguratorExtrasAware;
 use Swarrot\SwarrotBundle\Processor\ProcessorConfiguratorInterface;
@@ -14,33 +16,18 @@ use Symfony\Component\Console\Input\InputInterface;
 /**
  * @internal
  */
-final class UnrecoverableExceptionProcessorConfigurator implements ProcessorConfiguratorInterface
+final class UnrecoverableExceptionProcessorConfigurator implements ProcessorConfiguratorInterface, LoggerAwareInterface
 {
-    use ProcessorConfiguratorEnableAware, ProcessorConfiguratorExtrasAware;
+    use ProcessorConfiguratorEnableAware, ProcessorConfiguratorExtrasAware, LoggerAwareTrait;
 
-    /**
-     * @var ErrorPublisher
-     */
-    private $errorPublisher;
+    private ErrorPublisher $errorPublisher;
+    private string $processorClass;
 
-    /**
-     * @var string
-     */
-    private $processorClass;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        string $processorClass,
-        ErrorPublisher $errorPublisher,
-        LoggerInterface $logger
-    ) {
+    public function __construct(string $processorClass, ErrorPublisher $errorPublisher)
+    {
         $this->processorClass = $processorClass;
         $this->errorPublisher = $errorPublisher;
-        $this->logger = $logger;
+        $this->setLogger(new NullLogger());
     }
 
     public function getProcessorArguments(array $options): array

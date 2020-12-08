@@ -27,9 +27,9 @@ interface ConsumerInterface
      * @param Message $message
      * @param array $options
      *
-     * @return mixed
+     * @return mixed[]
      */
-    public function getData(Message $message, array $options);
+    public function getData(Message $message, array $options): array;
 
     /**
      * Implement your domain process in this method
@@ -42,11 +42,11 @@ interface ConsumerInterface
      *
      * Most of the time you will have to return void
      *
-     * @param mixed $data
+     * @param mixed[] $data
      * @param Message $message
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return void|false
      */
-    public function consumeData($data, Message $message, array $options);
+    public function consumeData(array $data, Message $message, array $options): bool;
 }
