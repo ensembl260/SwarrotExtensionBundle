@@ -86,8 +86,7 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
                 if (null !== $constraints = $this->consumer->getConstraints($data, $message, $options)) {
                     $violations = $this->validator->validate($data, $constraints);
 
-                    // refacto this
-                    if (0 < count($violations)) {
+                    if (0 < $violations->count()) {
                         $this->logger->warning('Invalid data for consumer.', ['violations' => $violations, 'message_id' => $message->getId(), 'data' => $data, 'consumer' => $this->consumerClass, 'swarrot_processor' => 'consumer_processor']);
 
                         return true;
