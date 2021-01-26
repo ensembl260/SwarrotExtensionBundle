@@ -1,0 +1,58 @@
+exchanges:
+  internal_waiting_5:
+    type: 'topic'
+    durable: true
+  internal_waiting_10:
+    type: 'topic'
+    durable: true
+  internal_waiting_30:
+    type: 'topic'
+    durable: true
+  internal_waiting_60:
+    type: 'topic'
+    durable: true
+  internal_waiting_600:
+    type: 'topic'
+    durable: true
+
+queues:
+  internal_waiting_5:
+    durable: true
+    arguments:
+      x-message-ttl: "5000"
+      x-dead-letter-exchange: ""
+    bindings:
+      - exchange: "internal_waiting_5"
+        routing_key: "#"
+  internal_waiting_10:
+    durable: true
+    arguments:
+      x-message-ttl: "10000"
+      x-dead-letter-exchange: ""
+    bindings:
+      - exchange: "internal_waiting_10"
+        routing_key: "#"
+  internal_waiting_30:
+    durable: true
+    arguments:
+      x-message-ttl: "30000"
+      x-dead-letter-exchange: ""
+    bindings:
+      - exchange: "internal_waiting_30"
+        routing_key: "#"
+  internal_waiting_60:
+    durable: true
+    arguments:
+      x-message-ttl: "60000"
+      x-dead-letter-exchange: ""
+    bindings:
+      - exchange: "internal_waiting_60"
+        routing_key: "#"
+  internal_waiting_600:
+    durable: true
+    arguments:
+      x-message-ttl: "600000"
+      x-dead-letter-exchange: ""
+    bindings:
+      - exchange: "internal_waiting_600"
+        routing_key: "#"

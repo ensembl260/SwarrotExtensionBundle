@@ -6,33 +6,30 @@ namespace MR\SwarrotExtensionBundle\Tests\Broker\Publisher;
 use MR\SwarrotExtensionBundle\Broker\Exception\PublishException;
 use MR\SwarrotExtensionBundle\Broker\Publisher\MessageFactoryInterface;
 use MR\SwarrotExtensionBundle\Broker\Publisher\Publisher;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Log\LoggerInterface;
 use Swarrot\Broker\Message;
 use Swarrot\SwarrotBundle\Broker\Publisher as SwarrotPublisher;
-use PHPUnit\Framework\TestCase;
 
 class PublisherTest extends TestCase
 {
-    /**
-     * @var Publisher
-     */
-    private $publisher;
+    private Publisher $publisher;
 
     /**
      * @var SwarrotPublisher&ObjectProphecy
      */
-    private $swarrotPublisherMock;
+    private ObjectProphecy $swarrotPublisherMock;
 
     /**
      * @var MessageFactoryInterface&ObjectProphecy
      */
-    private $messageFactoryMock;
+    private ObjectProphecy $messageFactoryMock;
 
     /**
      * @var LoggerInterface&ObjectProphecy
      */
-    private $loggerMock;
+    private ObjectProphecy $loggerMock;
 
     public function setUp(): void
     {
@@ -98,7 +95,7 @@ class PublisherTest extends TestCase
                     'exchange' => $expectedConfig['exchange'],
                     'routing_key' => $expectedConfig['routing_key'],
                     'class' => 'MR\SwarrotExtensionBundle\Broker\Publisher\Publisher',
-                    'line' => 57,
+                    'line' => 54,
                 ]
             )
             ->shouldBeCalled();
@@ -158,7 +155,7 @@ class PublisherTest extends TestCase
                     'exchange' => $expectedConfig['exchange'],
                     'routing_key' => $expectedConfig['routing_key'],
                     'class' => 'MR\SwarrotExtensionBundle\Broker\Publisher\Publisher',
-                    'line' => 72,
+                    'line' => 69,
                 ]
             )
             ->shouldBeCalled();

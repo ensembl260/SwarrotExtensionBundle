@@ -12,11 +12,10 @@ interface SupportConsumerInterface
      * This method allow you to specify if you want to skip a message or not
      * If you return false the message gonna be skipped
      *
-     * @param mixed[] $data
-     * @param Message $message
-     * @param array $options
+     * @param mixed $data
+     * @param array|mixed[] $options
      *
      * @return bool
      */
-    public function supportData(array $data, Message $message, array $options): bool;
+    public function supportData($data, Message $message, array $options): bool;
 }

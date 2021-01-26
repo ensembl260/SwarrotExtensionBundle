@@ -20,6 +20,9 @@ final class XDeathErrorPublisherSubscriber implements EventSubscriberInterface
         $this->publisher = $publisher;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public static function getSubscribedEvents(): array
     {
         return [

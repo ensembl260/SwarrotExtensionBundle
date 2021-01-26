@@ -24,12 +24,11 @@ interface ConsumerInterface
      * MR\SwarrotExtensionBundle\Broker\Exception\InvalidDataException
      * in order to log and specify that you can never consume this message
      *
-     * @param Message $message
-     * @param array $options
+     * @param array|mixed[] $options
      *
-     * @return mixed[]
+     * @return mixed
      */
-    public function getData(Message $message, array $options): array;
+    public function getData(Message $message, array $options);
 
     /**
      * Implement your domain process in this method
@@ -42,11 +41,8 @@ interface ConsumerInterface
      *
      * Most of the time you will have to return void
      *
-     * @param mixed[] $data
-     * @param Message $message
-     * @param mixed[] $options
-     *
-     * @return void|false
+     * @param mixed $data
+     * @param array|mixed[] $options
      */
-    public function consumeData(array $data, Message $message, array $options): bool;
+    public function consumeData($data, Message $message, array $options): bool;
 }

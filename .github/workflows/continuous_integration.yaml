@@ -19,7 +19,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get Composer Cache Directory
-        id: composer-cache
         run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
 
       - name: Configure cache
@@ -35,6 +34,11 @@ jobs:
           composer self-update
           composer require symfony/framework-bundle:${{ matrix.symfony_version }} --no-update
           COMPOSER_MEMORY_LIMIT=-1 composer update --no-interaction --prefer-dist
+
+      - name: Run lint
+        run: |
+          php ./vendor/bin/phpmd . text phpmd.xml --suffixes php
+          php ./vendor/bin/phpcs --standard=phpcs.xml --extensions=php  .
 
       - name: Run test
         run: |

@@ -20,12 +20,15 @@ final class XDeathMaxCountExceptionHandler implements LoggerAwareInterface
 
     private EventDispatcherInterface $eventDispatcher;
 
-    public function __construct($eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->setLogger(new NullLogger());
     }
 
+    /**
+     * @param mixed[] $options
+     */
     public function __invoke(\Throwable $exception, Message $message, array $options): bool
     {
         $this

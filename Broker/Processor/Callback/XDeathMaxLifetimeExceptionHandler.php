@@ -26,6 +26,9 @@ final class XDeathMaxLifetimeExceptionHandler implements LoggerAwareInterface
         $this->setLogger(new NullLogger());
     }
 
+    /**
+     * @param mixed[] $options
+     */
     public function __invoke(\Throwable $exception, Message $message, array $options): bool
     {
         $this

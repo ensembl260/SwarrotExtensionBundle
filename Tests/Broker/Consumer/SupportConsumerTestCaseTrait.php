@@ -10,11 +10,6 @@ use Swarrot\Broker\Message;
 trait SupportConsumerTestCaseTrait
 {
     /**
-     * @var SupportConsumerInterface
-     */
-    protected $consumer;
-
-    /**
      * @dataProvider notSupportDataProvider
      *
      * @param mixed $data

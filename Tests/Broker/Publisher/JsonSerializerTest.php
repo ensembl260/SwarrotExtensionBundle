@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class JsonSerializerTest extends TestCase
 {
-    /**
-     * @var JsonSerializer
-     */
-    private $jsonSerializer;
+    private JsonSerializer $jsonSerializer;
 
     public function setUp(): void
     {
@@ -32,12 +29,12 @@ class JsonSerializerTest extends TestCase
     /**
      * @dataProvider serializeDataProvider
      *
-     * @param $data
-     * @param $expectedData
+     * @param mixed|string|string[] $data
+     * @param mixed|string|string[] $expectedData
      */
     public function testSerialize($data, $expectedData): void
     {
-        $this->assertEquals($expectedData, $this->jsonSerializer->serialize($data, 'json'));
+        self::assertEquals($expectedData, $this->jsonSerializer->serialize($data, 'json'));
     }
 
     public function testSerializeWillThrowInvalidArgumentException(): void

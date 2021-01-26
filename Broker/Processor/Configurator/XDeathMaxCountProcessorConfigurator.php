@@ -17,7 +17,9 @@ use Symfony\Component\Console\Input\InputOption;
  */
 final class XDeathMaxCountProcessorConfigurator implements ProcessorConfiguratorInterface, LoggerAwareInterface
 {
-    use ProcessorConfiguratorEnableAware, ProcessorConfiguratorExtrasAware, LoggerAwareTrait;
+    use ProcessorConfiguratorEnableAware;
+    use ProcessorConfiguratorExtrasAware;
+    use LoggerAwareTrait;
 
     private string $processorClass;
     private XDeathMaxCountExceptionHandler $exceptionHandler;
@@ -29,6 +31,9 @@ final class XDeathMaxCountProcessorConfigurator implements ProcessorConfigurator
         $this->setLogger(new NullLogger());
     }
 
+    /**
+     * @param mixed[] $options
+     */
     public function getProcessorArguments(array $options): array
     {
         return [

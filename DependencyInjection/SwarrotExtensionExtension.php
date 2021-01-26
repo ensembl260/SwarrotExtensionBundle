@@ -11,6 +11,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class SwarrotExtensionExtension extends Extension
 {
+    /**
+     * {@inheritDoc}
+     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
@@ -29,6 +32,9 @@ class SwarrotExtensionExtension extends Extension
         $loader->load('services.yml');
     }
 
+    /**
+     * @param string[][] $config
+     */
     private function buildAdminConnection(array $config, ContainerBuilder $container): array
     {
         $adminConnection = [
@@ -53,6 +59,10 @@ class SwarrotExtensionExtension extends Extension
         return $adminConnection;
     }
 
+    /**
+     * @param string[] $parsedUrl
+     * @param string[] $config
+     */
     private function buildAdminHost(array $parsedUrl, array $config): string
     {
         $host = '127.0.0.1';
@@ -63,6 +73,10 @@ class SwarrotExtensionExtension extends Extension
         return $config['force_ssl'] ? 'https://'.$host : 'http://'.$host;
     }
 
+    /**
+     * @param string[] $parsedUrl
+     * @param string[] $config
+     */
     private function buildAdminPort(array $parsedUrl, array $config): string
     {
         $port = '15672';
@@ -72,6 +86,10 @@ class SwarrotExtensionExtension extends Extension
         return (string) $port;
     }
 
+    /**
+     * @param string[] $parsedUrl
+     * @param string[] $config
+     */
     private function buildAdminLogin(array $parsedUrl, array $config): string
     {
         $login = 'guest';
@@ -81,6 +99,10 @@ class SwarrotExtensionExtension extends Extension
         return $login;
     }
 
+    /**
+     * @param string[] $parsedUrl
+     * @param string[] $config
+     */
     private function buildAdminPassword(array $parsedUrl, array $config): string
     {
         $password = 'guest';

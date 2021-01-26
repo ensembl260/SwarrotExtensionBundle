@@ -15,8 +15,13 @@ final class XDeathEvent extends Event
     private string $type;
     private \Throwable $exception;
     private Message $message;
+
+    /** @var array|mixed[] */
     private array $options;
 
+    /**
+     * @param array|mixed[] $options
+     */
     public function __construct(string $type, \Throwable $exception, Message $message, array $options)
     {
         if (!in_array($type, [static::MAX_LIFETIME_REACHED, static::MAX_COUNT_REACHED], true)) {

@@ -5,18 +5,16 @@ declare(strict_types=1);
 namespace MR\SwarrotExtensionBundle\Broker\Consumer;
 
 use Swarrot\Broker\Message;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Exception\ValidatorException;
 
 interface ConstraintConsumerInterface
 {
     /**
-     * @param mixed[] $data
-     * @param Message $message
+     * @param mixed $data
      * @param mixed[] $options
      *
-     * @return Constraint[]
-     * @throws ValidatorException
+     * @return \Symfony\Component\Validator\Constraint[]
+     *
+     * @throws \Symfony\Component\Validator\Exception\ValidatorException
      */
-    public function getConstraints(array $data, Message $message, array $options): array;
+    public function getConstraints($data, Message $message, array $options): array;
 }

@@ -6,25 +6,29 @@ namespace MR\SwarrotExtensionBundle\Broker\Exception;
 
 class PublishException extends \Exception
 {
-    private string $object;
+    /** @var mixed */
+    private $data;
     private string $messageType;
 
+    /**
+     * @param mixed $data
+     */
     public function __construct(
-        string $object,
+        $data,
         string $messageType,
         ?string $message = null,
-        $code = 0,
-        \Exception $previous = null
+        int $code = 0,
+        ?\Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
 
-        $this->object = $object;
+        $this->data = $data;
         $this->messageType = $messageType;
     }
 
-    public function getObject(): string
+    public function getData()
     {
-        return $this->object;
+        return $this->data;
     }
 
     public function getMessageType(): string

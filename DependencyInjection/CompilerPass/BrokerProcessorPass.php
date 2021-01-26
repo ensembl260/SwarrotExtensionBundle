@@ -1,12 +1,11 @@
 <?php
-
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace MR\SwarrotExtensionBundle\DependencyInjection\CompilerPass;
 
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 
 class BrokerProcessorPass implements CompilerPassInterface
@@ -23,7 +22,8 @@ class BrokerProcessorPass implements CompilerPassInterface
             foreach ($tags as $tag) {
                 $container
                     ->setDefinition($tag['id'], new ChildDefinition('swarrot_extension.processor.abstract'))
-                    ->replaceArgument(0, new Reference($id));
+                    ->replaceArgument(0, new Reference($id))
+                ;
             }
         }
     }

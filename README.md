@@ -139,13 +139,7 @@ swarrot:
                 - configurator: 'swarrot_extension.processor.x_death_max_lifetime'
                   extras:
                      x_death_max_lifetime: 100 # (default: 3600 seconds)
-                     
-                - configurator: 'swarrot_extension.processor.unrecoverable_exception'
 ```
-
-The `UnrecoverableExceptionProcessor` allow you to publish an error when consumer throw a `UnrecoverableException` or `UnrecoverableConsumerException`.
-
-When you are in a consumer be sure to use `UnrecoverableConsumerException`. With this exception you can decide if you want to rethrow the exception or stop the current consumer.
 
 ## Custom Message Factory
 
@@ -160,7 +154,7 @@ swarrot_extension:
 
 ## Error Publisher
 
-When using middlewares such as `XDeathMaxCountProcessor`, `GuzzleExceptionProcessor`, etc... the ErrorPublisher publish a message reporting the encoutered error.
+When using middlewares such as `XDeathMaxCountProcessor`, etc... the ErrorPublisher publish a message reporting the encoutered error.
 To be able to publish, an `error` message type must be configured in your swarrot config:
 
 ```yaml

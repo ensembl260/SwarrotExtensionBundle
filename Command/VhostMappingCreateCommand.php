@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace MR\SwarrotExtensionBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Bab\RabbitMq\Configuration;
 use Bab\RabbitMq\Action\RealAction;
+use Bab\RabbitMq\Configuration;
 use Bab\RabbitMq\HttpClient\CurlClient;
 use Bab\RabbitMq\Logger\CliLogger;
 use Bab\RabbitMq\VhostManager;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class VhostMappingCreateCommand extends Command
 {
@@ -35,9 +36,15 @@ class VhostMappingCreateCommand extends Command
     {
         $this->setName('swarrot_extension:vhost:mapping:create')
             ->setDescription('Create a vhost from a configuration file')
-            ->addArgument('filepath', InputArgument::REQUIRED, 'Path to the configuration file');
+            ->addArgument('filepath', InputArgument::REQUIRED, 'Path to the configuration file')
+            ->addOption('retry-queues', 'rq', InputOption::VALUE_OPTIONAL, 'Load default retry queues', true)
+        ;
     }
 
+    /**
+     * {@inheritDoc}
+     * phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $configuration = new Configuration\Yaml($input->getArgument('filepath'));
@@ -49,7 +56,6 @@ class VhostMappingCreateCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
      * @param int|null|string $vhost
      *
      * @return VhostManager
