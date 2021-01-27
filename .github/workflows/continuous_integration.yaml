@@ -1,0 +1,45 @@
+name: SwarrotExtensionBundle CI
+
+on: [push]
+
+jobs:
+  continuous_integration:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        symfony_version: [4.4.*, 5.0.*, 5.1.*, 5.2.*]
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get Composer Cache Directory
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Configure cache
+        uses: actions/cache@v2
+        with:
+          path: $COMPOSER_CACHE_FILES_DIR
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Composer install dependencies
+        run: |
+          composer self-update
+          composer require symfony/framework-bundle:${{ matrix.symfony_version }} --no-update
+          COMPOSER_MEMORY_LIMIT=-1 composer update --no-interaction --prefer-dist
+
+      - name: Run lint
+        run: |
+          php ./vendor/bin/phpmd . text phpmd.xml --suffixes php
+          php ./vendor/bin/phpcs --standard=phpcs.xml --extensions=php  .
+
+      - name: Run test
+        run: |
+          composer validate --strict --no-check-lock
+          ./vendor/bin/phpunit

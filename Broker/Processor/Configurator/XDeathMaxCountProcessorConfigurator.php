@@ -2,7 +2,9 @@
 
 namespace MR\SwarrotExtensionBundle\Broker\Processor\Configurator;
 
-use Psr\Log\LoggerInterface;
+use MR\SwarrotExtensionBundle\Broker\Processor\Callback\XDeathMaxCountExceptionHandler;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Swarrot\SwarrotBundle\Processor\ProcessorConfiguratorEnableAware;
 use Swarrot\SwarrotBundle\Processor\ProcessorConfiguratorExtrasAware;
@@ -13,35 +15,25 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * @internal
  */
-final class XDeathMaxCountProcessorConfigurator implements ProcessorConfiguratorInterface
+final class XDeathMaxCountProcessorConfigurator implements ProcessorConfiguratorInterface, LoggerAwareInterface
 {
-    use ProcessorConfiguratorEnableAware, ProcessorConfiguratorExtrasAware;
+    use ProcessorConfiguratorEnableAware;
+    use ProcessorConfiguratorExtrasAware;
+    use LoggerAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $processorClass;
+    private string $processorClass;
+    private XDeathMaxCountExceptionHandler $exceptionHandler;
 
-    /**
-     * @var callable
-     */
-    private $exceptionHandler;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        string $processorClass,
-        callable $exceptionHandler,
-        LoggerInterface $logger = null
-    ) {
+    public function __construct(string $processorClass, XDeathMaxCountExceptionHandler $exceptionHandler)
+    {
         $this->processorClass = $processorClass;
         $this->exceptionHandler = $exceptionHandler;
-        $this->logger = $logger ?: new NullLogger();
+        $this->setLogger(new NullLogger());
     }
 
+    /**
+     * @param mixed[] $options
+     */
     public function getProcessorArguments(array $options): array
     {
         return [

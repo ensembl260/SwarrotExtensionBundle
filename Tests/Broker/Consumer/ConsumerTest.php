@@ -89,8 +89,17 @@ class ConsumerTest extends TestCase
     }
 }
 
+/**
+ * phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
+ * phpcs:disable Squiz.Classes.ClassFileName.NoMatch
+ */
 class Consumer implements ConsumerInterface, ConstraintConsumerInterface, SupportConsumerInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     */
     public function getConstraints($data, Message $message, array $options): array
     {
         return [
@@ -105,17 +114,33 @@ class Consumer implements ConsumerInterface, ConstraintConsumerInterface, Suppor
         ];
     }
 
-    public function consumeData($data, Message $message, array $options)
+    /**
+     * {@inheritDoc}
+     *
+     * phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     */
+    public function consumeData($data, Message $message, array $options): bool
     {
         return $data['consumed'] === true;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     */
     public function supportData($data, Message $message, array $options): bool
     {
         return $data['supported'] === true;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     */
     public function getData(Message $message, array $options)
     {
+        return [];
     }
 }

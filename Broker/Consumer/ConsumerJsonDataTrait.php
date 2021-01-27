@@ -8,18 +8,18 @@ use Swarrot\Broker\Message;
 trait ConsumerJsonDataTrait
 {
     /**
-     * @param Message $message
-     * @param array $options
+     * @param array|mixed[] $options
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
      */
     public function getData(Message $message, array $options)
     {
-        $data = json_decode($message->getBody(), true, 512);
-
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new InvalidDataException(sprintf('JSON error: "%s". Valid json expected.', json_last_error_msg()));
+        try {
+            $data = json_decode($message->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $exception) {
+            throw new InvalidDataException(sprintf('JSON error: "%s". Valid json expected.', $exception->getMessage()));
         }
 
         return $data;

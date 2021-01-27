@@ -13,8 +13,7 @@ interface SupportConsumerInterface
      * If you return false the message gonna be skipped
      *
      * @param mixed $data
-     * @param Message $message
-     * @param array $options
+     * @param array|mixed[] $options
      *
      * @return bool
      */

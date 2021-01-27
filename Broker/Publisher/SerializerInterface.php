@@ -8,10 +8,7 @@ interface SerializerInterface
 {
     /**
      * @param mixed $data
-     * @param mixed $format
-     * @param array $context
-     *
-     * @return mixed
+     * @param mixed[]  $context
      */
-    public function serialize($data, $format, array $context = []);
+    public function serialize($data, string $format, array $context = []): string;
 }

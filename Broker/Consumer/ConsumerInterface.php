@@ -24,8 +24,7 @@ interface ConsumerInterface
      * MR\SwarrotExtensionBundle\Broker\Exception\InvalidDataException
      * in order to log and specify that you can never consume this message
      *
-     * @param Message $message
-     * @param array $options
+     * @param array|mixed[] $options
      *
      * @return mixed
      */
@@ -43,10 +42,7 @@ interface ConsumerInterface
      * Most of the time you will have to return void
      *
      * @param mixed $data
-     * @param Message $message
-     * @param array $options
-     *
-     * @return void|false
+     * @param array|mixed[] $options
      */
-    public function consumeData($data, Message $message, array $options);
+    public function consumeData($data, Message $message, array $options): bool;
 }

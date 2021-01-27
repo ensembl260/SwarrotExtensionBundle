@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class MessageFactoryTest extends TestCase
 {
-    /**
-     * @var MessageFactory
-     */
-    private $messageFactory;
+    private MessageFactory $messageFactory;
 
     public function setUp(): void
     {
@@ -20,10 +17,10 @@ class MessageFactoryTest extends TestCase
 
     public function testSerialize(): void
     {
-        $message = $this->messageFactory->createMessage('fake_data', ['fake_property'], 11);
+        $message = $this->messageFactory->createMessage('fake_data', ['fake_property'], '11');
 
-        $this->assertEquals('fake_data', $message->getBody());
-        $this->assertEquals(['fake_property'], $message->getProperties());
-        $this->assertEquals(11, $message->getId());
+        self::assertEquals('fake_data', $message->getBody());
+        self::assertEquals(['fake_property'], $message->getProperties());
+        self::assertEquals(11, $message->getId());
     }
 }

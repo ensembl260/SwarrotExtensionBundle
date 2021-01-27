@@ -2,33 +2,17 @@
 
 namespace MR\SwarrotExtensionBundle\Broker\Publisher;
 
-use MR\SwarrotExtensionBundle\Broker\Exception\PublishException;
-use MR\SwarrotExtensionBundle\Broker\Exception\UnrecoverableConsumerException;
-use MR\SwarrotExtensionBundle\Broker\Exception\UnrecoverableException;
 use MR\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Error\FatalError;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class ErrorPublisher implements ErrorPublisherInterface
 {
     private const MESSAGE_TYPE = 'error';
 
-    /**
-     * @var PublisherInterface
-     */
-    private $publisher;
-
-    /**
-     * @var string
-     */
-    private $routingKey;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
+    private PublisherInterface $publisher;
+    private string $routingKey;
+    private SerializerInterface $serializer;
 
     public function __construct(
         PublisherInterface $publisher,
@@ -109,70 +93,33 @@ class ErrorPublisher implements ErrorPublisherInterface
      */
     protected function getMetadata($object)
     {
-        $metadata = [];
-
-        switch (true) {
-            case $object instanceof XDeathEvent:
-                $message = $object->getMessage();
-
-                return array_replace($metadata, [
-                    'rabbit' => [
-                        'xdeath-event-type' => $object->getType(),
-                        'options' => $object->getOptions(),
-                        'message' => [
-                            'id' => $message->getId(),
-                            'body' => $message->getBody(),
-                            'properties' => $message->getProperties(),
-                        ],
-                    ],
-                ]);
-            case $object instanceof RequestException:
-                $request = $object->getRequest();
-                $response = $object->getResponse();
-
-                return array_replace($metadata, [
-                    'guzzle' => [
-                        'request' => [
-                            'method' => $request->getMethod(),
-                            'headers' => $request->getHeaders(),
-                            'uri' => (string) $request->getUri(),
-                        ],
-                        'response' => [
-                            'reason' => $response->getReasonPhrase(),
-                            'statusCode' => $response->getStatusCode(),
-                            'headers' => $response->getHeaders(),
-                            'body' => (string) $response->getBody(),
-                        ],
-                    ],
-                ]);
-            case $object instanceof UnrecoverableConsumerException:
-                $message = $object->getBrokerMessage();
-
-                return array_replace($metadata, [
-                    'rabbit' => [
-                        'want-kill-consumer' => $object->wantKillConsumer(),
-                        'want-rethrow' => $object->wantRethrow(),
-                        'message' => [
-                            'id' => $message->getId(),
-                            'body' => $message->getBody(),
-                            'properties' => $message->getProperties(),
-                        ],
-                    ],
-                ]);
+        if (!$object instanceof XDeathEvent) {
+            return [];
         }
 
-        return $metadata;
+        $message = $object->getMessage();
+
+        return [
+            'rabbit' => [
+                'xdeath-event-type' => $object->getType(),
+                'options' => $object->getOptions(),
+                'message' => [
+                    'id' => $message->getId(),
+                    'body' => $message->getBody(),
+                    'properties' => $message->getProperties(),
+                ],
+            ],
+        ];
     }
 
     /**
-     * @param string $messageType
-     * @param mixed $data
-     * @param array $messageProperties
-     * @param array $overridenConfig
+     * @param mixed[] $data
+     * @param mixed[] $messageProperties
+     * @param mixed[] $overridenConfig
      *
-     * @throws PublishException
+     * @throws \MR\SwarrotExtensionBundle\Broker\Exception\PublishException
      */
-    private function publish(string $messageType, $data, array $messageProperties = [], array $overridenConfig = []): void
+    private function publish(string $messageType, array $data, array $messageProperties = [], array $overridenConfig = []): void
     {
         $this->publisher->publish(
             $messageType,
@@ -185,24 +132,17 @@ class ErrorPublisher implements ErrorPublisherInterface
     private function flattenException(\Throwable $exception): FlattenException
     {
         if (!$exception instanceof \Exception) {
-            $exception = new FatalThrowableError($exception);
+            $exception = new FatalError($exception->getMessage(), $exception->getCode(),error_get_last());
         }
 
         return FlattenException::create($exception);
     }
 
-    /**
-     * @param object $object
-     *
-     * @return string
-     */
-    private function getRoutingKey($object): string
+    private function getRoutingKey(object $object): string
     {
         switch (true) {
             case $object instanceof XDeathEvent:
                 return sprintf($this->routingKey, 'error.rabbit.xdeath');
-            case $object instanceof UnrecoverableException:
-                return sprintf($this->routingKey, 'error.unrecoverable_exception');
             case $object instanceof \Throwable:
                 return sprintf($this->routingKey, 'error.exception');
             default:

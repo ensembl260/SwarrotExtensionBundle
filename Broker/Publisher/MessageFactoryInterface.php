@@ -10,10 +10,9 @@ interface MessageFactoryInterface
 {
     /**
      * @param mixed|null $body
-     * @param array $properties
-     * @param null $id
+     * @param array|mixed[] $properties
      *
      * @return Message
      */
-    public function createMessage($body = null, array $properties = [], $id = null): Message;
+    public function createMessage($body = null, array $properties = [], ?string $id = null): Message;
 }

@@ -6,22 +6,19 @@ namespace MR\SwarrotExtensionBundle\Tests\Broker\Consumer;
 use MR\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
 use PHPUnit\Framework\TestCase;
 use Swarrot\Broker\Message;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validation;
 
 trait ConstrainedConsumerTestCaseTrait
 {
     /**
-     * @var ConstraintConsumerInterface
+     * @param mixed[] $expectedViolations
      */
-    protected $consumer;
-
     public function assertViolations(array $expectedViolations, ConstraintViolationListInterface $constraintViolationList): void
     {
         $violationList = [];
-        /** @var ConstraintViolation $violation */
+
+        /** @var \Symfony\Component\Validator\ConstraintViolation $violation */
         foreach ($constraintViolationList as $violation) {
             $violationList[$violation->getPropertyPath()] = $violation->getMessage();
         }
@@ -34,9 +31,9 @@ trait ConstrainedConsumerTestCaseTrait
      * @dataProvider validDataProvider
      *
      * @param mixed $data
-     * @param array|null $groups
+     * @param mixed[]|null $groups
      */
-    public function testValidMessage($data, array $groups = null): void
+    public function testValidMessage($data, ?array $groups = null): void
     {
         if (!$this->consumer instanceof ConstraintConsumerInterface) {
             TestCase::markTestSkipped('Only for constrainted consumer.');
@@ -56,10 +53,10 @@ trait ConstrainedConsumerTestCaseTrait
      * @dataProvider invalidDataProvider
      *
      * @param mixed $data
-     * @param array $expectedViolations
-     * @param array|null $groups
+     * @param mixed[] $expectedViolations
+     * @param mixed[]|null $groups
      */
-    public function testInvalidMessage($data, array $expectedViolations, array $groups = null): void
+    public function testInvalidMessage($data, array $expectedViolations, ?array $groups = null): void
     {
         if (!$this->consumer instanceof ConstraintConsumerInterface) {
             TestCase::markTestSkipped('Only for constrainted consumer.');
@@ -77,12 +74,10 @@ trait ConstrainedConsumerTestCaseTrait
 
     /**
      * @param mixed $value
-     * @param Constraint|Constraint[] $constraints
-     * @param array|null $groups
-     *
-     * @return ConstraintViolationListInterface
+     * @param array|\Symfony\Component\Validator\Constraint[] $constraints
+     * @param mixed[]|null $groups
      */
-    private function validate($value, $constraints, $groups = null)
+    private function validate($value, array $constraints, ?array $groups = null): ConstraintViolationListInterface
     {
         $validator = Validation::createValidator();
 

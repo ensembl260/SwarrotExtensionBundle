@@ -119,6 +119,42 @@ swarrot:
             ...
 ```
 
+## Create mapping
+
+Create one file per vhost. In this file configure the exchanges and queues configuration.
+
+```yaml
+'your_vhost_name':
+  parameters:
+    with_dl: false # If true, all queues will have a dl and the corresponding mapping with the exchange "dl"
+    with_unroutable: false # If true, all exchange will be declared with an unroutable config
+
+  exchanges:
+    your_exchange_name:
+      type: 'topic' # direct, fanout, topic or headers
+      durable: true # true or false
+
+  queues:
+    your_queue_name:
+      durable: true # true or false
+      arguments:
+        x-dead-letter-exchange: 'internal_waiting_5' # internal_waiting_5 internal_waiting_10 internal_waiting_30 internal_waiting_60 internal_waiting_600
+        x-dead-letter-routing-key: 'your_queue_name.dl'
+      bindings:
+        - exchange: 'your_exchange_name'
+          routing_key: 'your_routing_key_name'
+```
+
+For apply configuration run this commande `bin/console swarrot_extension:vhost:mapping:create -r config/rabbit-vhost.yaml`.
+If you use the option `-r` or `--retry-queues` you load default retry queues configuration
+
+The default retry queues configuration:
+- internal_waiting_5: retry message after 5 seconds
+- internal_waiting_10: retry message after 10 seconds
+- internal_waiting_30: retry message after 30 seconds
+- internal_waiting_60: retry message after 60 seconds
+- internal_waiting_600: retry message after 600 seconds
+
 ## Middlewares
 
 If you want to limit the maximum retry of a message you can use the `XDeathMaxCountProcessor`. 
@@ -139,13 +175,7 @@ swarrot:
                 - configurator: 'swarrot_extension.processor.x_death_max_lifetime'
                   extras:
                      x_death_max_lifetime: 100 # (default: 3600 seconds)
-                     
-                - configurator: 'swarrot_extension.processor.unrecoverable_exception'
 ```
-
-The `UnrecoverableExceptionProcessor` allow you to publish an error when consumer throw a `UnrecoverableException` or `UnrecoverableConsumerException`.
-
-When you are in a consumer be sure to use `UnrecoverableConsumerException`. With this exception you can decide if you want to rethrow the exception or stop the current consumer.
 
 ## Custom Message Factory
 
@@ -160,7 +190,7 @@ swarrot_extension:
 
 ## Error Publisher
 
-When using middlewares such as `XDeathMaxCountProcessor`, `GuzzleExceptionProcessor`, etc... the ErrorPublisher publish a message reporting the encoutered error.
+When using middlewares such as `XDeathMaxCountProcessor`, etc... the ErrorPublisher publish a message reporting the encoutered error.
 To be able to publish, an `error` message type must be configured in your swarrot config:
 
 ```yaml

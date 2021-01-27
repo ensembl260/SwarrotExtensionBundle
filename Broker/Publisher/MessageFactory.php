@@ -9,13 +9,9 @@ use Swarrot\Broker\Message;
 class MessageFactory implements MessageFactoryInterface
 {
     /**
-     * @param mixed|null $body
-     * @param array $properties
-     * @param mixed|null $id
-     *
-     * @return Message
+     * {@inheritDoc}
      */
-    public function createMessage($body = null, array $properties = [], $id = null): Message
+    public function createMessage($body = null, array $properties = [], ?string $id = null): Message
     {
         return new Message($body, $properties, $id);
     }

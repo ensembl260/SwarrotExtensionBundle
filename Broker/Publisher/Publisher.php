@@ -14,15 +14,8 @@ class Publisher implements PublisherInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var SwarrotPublisher
-     */
-    private $publisher;
-
-    /**
-     * @var MessageFactoryInterface
-     */
-    private $messageFactory;
+    private SwarrotPublisher $publisher;
+    private MessageFactoryInterface $messageFactory;
 
     public function __construct(
         SwarrotPublisher $publisher,
@@ -33,9 +26,13 @@ class Publisher implements PublisherInterface, LoggerAwareInterface
         $this->logger = new NullLogger();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function publish(string $messageType, $data, array $messageProperties = [], array $overridenConfig = []): void
     {
         $config = array_merge($this->publisher->getConfigForMessageType($messageType), $overridenConfig);
+
         try {
             $messageProperties['headers']['X-Routing-key'] = $config['routing_key'] ?: '';
 
@@ -46,32 +43,33 @@ class Publisher implements PublisherInterface, LoggerAwareInterface
             );
 
             $this->logger->info(
-                'Publish success.', 
+                'Publish success.',
                 [
-                    'data' => $data, 
-                    'message_type' => $messageType, 
-                    'connection' => $config['connection'], 
-                    'exchange' => $config['exchange'], 
-                    'routing_key' => $config['routing_key'], 
-                    'class' => __CLASS__, 
-                    'line' => __LINE__
+                    'data' => $data,
+                    'message_type' => $messageType,
+                    'connection' => $config['connection'],
+                    'exchange' => $config['exchange'],
+                    'routing_key' => $config['routing_key'],
+                    'class' => static::class,
+                    'line' => __LINE__,
                 ]
             );
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $errorMessage = 'Publish fail.';
             $this->logger->error(
-                $errorMessage, 
+                $errorMessage,
                 [
-                    'exception' => $exception, 
-                    'data' => $data, 
-                    'message_type' => $messageType, 
-                    'connection' => $config['connection'], 
-                    'exchange' => $config['exchange'], 
-                    'routing_key' => $config['routing_key'], 
-                    'class' => __CLASS__, 
-                    'line' => __LINE__
+                    'exception' => $exception,
+                    'data' => $data,
+                    'message_type' => $messageType,
+                    'connection' => $config['connection'],
+                    'exchange' => $config['exchange'],
+                    'routing_key' => $config['routing_key'],
+                    'class' => static::class,
+                    'line' => __LINE__,
                 ]
             );
+
             throw new PublishException($data, $messageType, $errorMessage, 0, $exception);
         }
     }
