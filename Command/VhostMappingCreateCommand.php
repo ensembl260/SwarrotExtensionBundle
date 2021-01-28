@@ -50,7 +50,7 @@ class VhostMappingCreateCommand extends Command
         $this->setName('swarrot_extension:vhost:mapping:create')
             ->setDescription('Create a vhost from a configuration file')
             ->addArgument('filepath', InputArgument::REQUIRED, 'Path to the configuration file')
-            ->addOption('retry-queues', 'rq', InputOption::VALUE_OPTIONAL, 'Load default retry queues', true)
+            ->addOption('retry-queues', 'r', InputOption::VALUE_NONE, 'Load default retry queues')
         ;
     }
 
