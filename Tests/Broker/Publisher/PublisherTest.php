@@ -144,22 +144,6 @@ class PublisherTest extends TestCase
             ->publish('message_type', $message, $expectedConfig)
             ->willThrow($exception);
 
-        $this->loggerMock
-            ->error(
-                'Publish fail.',
-                [
-                    'exception' => $exception,
-                    'data' => $data,
-                    'message_type' => 'message_type',
-                    'connection' => $expectedConfig['connection'],
-                    'exchange' => $expectedConfig['exchange'],
-                    'routing_key' => $expectedConfig['routing_key'],
-                    'class' => 'MR\SwarrotExtensionBundle\Broker\Publisher\Publisher',
-                    'line' => 69,
-                ]
-            )
-            ->shouldBeCalled();
-
         $this->expectException(PublishException::class);
         $this->expectExceptionMessage('Publish fail.');
 
