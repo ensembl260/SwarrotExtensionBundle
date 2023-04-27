@@ -4,10 +4,10 @@ on: [push]
 
 jobs:
   continuous_integration:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
-        symfony_version: [4.4.*, 5.0.*, 5.1.*, 5.2.*]
+        symfony_version: [5.4.*]
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

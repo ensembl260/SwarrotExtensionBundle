@@ -56,8 +56,6 @@ class Publisher implements PublisherInterface, LoggerAwareInterface
             );
         } catch (\Throwable $exception) {
             $errorMessage = 'Publish fail.';
-            var_dump($exception->getMessage());
-            exit;
 
             $this->logger->error(
                 $errorMessage,
