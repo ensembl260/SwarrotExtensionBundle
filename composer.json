@@ -14,10 +14,10 @@
         "psr/log": "~1.0",
         "swarrot/swarrot": "^4.0",
         "swarrot/swarrot-bundle": "^2.1",
-        "symfony/framework-bundle": "6.0.*",
-        "symfony/validator": "5.4.*",
-        "symfony/property-access": "5.4.*",
-        "symfony/event-dispatcher": "5.4.*",
+        "symfony/framework-bundle": "6.4.*",
+        "symfony/validator": "6.4.*",
+        "symfony/property-access": "6.4.*",
+        "symfony/event-dispatcher": "6.4.*",
         "odolbeau/rabbit-mq-admin-toolkit": "^4.0|^5.0"
     },
     "require-dev": {
@@ -26,7 +26,7 @@
         "slevomat/coding-standard": "^6.4",
         "phpmd/phpmd": "^2.9",
         "squizlabs/php_codesniffer": "^3.5",
-        "symfony/error-handler": "5.4.*",
+        "symfony/error-handler": "6.4.*",
         "phpspec/prophecy": "^1.15"
     },
     "config": {
