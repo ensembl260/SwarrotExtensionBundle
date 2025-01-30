@@ -1,6 +1,6 @@
 <?php
 
-namespace MR\SwarrotExtensionBundle\Broker\Publisher;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Publisher;
 
 class JsonSerializer implements SerializerInterface
 {

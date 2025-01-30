@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Publisher;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Publisher;
 
-use MR\SwarrotExtensionBundle\Broker\Exception\PublishException;
-use MR\SwarrotExtensionBundle\Broker\Publisher\MessageFactoryInterface;
-use MR\SwarrotExtensionBundle\Broker\Publisher\Publisher;
+use Ensembl260\SwarrotExtensionBundle\Broker\Exception\PublishException;
+use Ensembl260\SwarrotExtensionBundle\Broker\Publisher\MessageFactoryInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Publisher\Publisher;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Log\LoggerInterface;
@@ -94,7 +95,7 @@ class PublisherTest extends TestCase
                     'connection' => $expectedConfig['connection'],
                     'exchange' => $expectedConfig['exchange'],
                     'routing_key' => $expectedConfig['routing_key'],
-                    'class' => 'MR\SwarrotExtensionBundle\Broker\Publisher\Publisher',
+                    'class' => 'Ensembl260\SwarrotExtensionBundle\Broker\Publisher\Publisher',
                     'line' => 54,
                 ]
             )

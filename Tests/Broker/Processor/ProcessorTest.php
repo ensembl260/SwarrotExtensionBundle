@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Processor;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Processor;
 
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConsumerInterface;
-use MR\SwarrotExtensionBundle\Broker\Consumer\SupportConsumerInterface;
-use MR\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
-use MR\SwarrotExtensionBundle\Broker\Processor\Processor;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\SupportConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
+use Ensembl260\SwarrotExtensionBundle\Broker\Processor\Processor;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Log\LoggerInterface;

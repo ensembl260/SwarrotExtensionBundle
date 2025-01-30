@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Broker\Publisher;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Publisher;
 
 use Swarrot\Broker\Message;
 

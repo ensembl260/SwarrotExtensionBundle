@@ -13,7 +13,7 @@ declare (strict_types=1);
 
 namespace AppBundle\Broker\Consumer;
 
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConsumerInterface;
 use Swarrot\Broker\Message;
 
 class MyConsumer implements ConsumerInterface
@@ -185,7 +185,7 @@ Update the config with :
 
 ```yaml
 swarrot_extension:
-    message_factory: 'MR\Infrastructure\Broker\Publisher\MessageFactory'
+    message_factory: 'Ensembl260\Infrastructure\Broker\Publisher\MessageFactory'
 ```
 
 ## Error Publisher

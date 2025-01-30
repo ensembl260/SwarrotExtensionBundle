@@ -1,8 +1,8 @@
 <?php
 
-namespace MR\SwarrotExtensionBundle\Broker\Processor\Configurator;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Processor\Configurator;
 
-use MR\SwarrotExtensionBundle\Broker\Processor\Callback\XDeathMaxCountExceptionHandler;
+use Ensembl260\SwarrotExtensionBundle\Broker\Processor\Callback\XDeathMaxCountExceptionHandler;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;

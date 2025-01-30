@@ -1,8 +1,8 @@
 <?php
 
-namespace MR\SwarrotExtensionBundle\Broker\Consumer;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Consumer;
 
-use MR\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
+use Ensembl260\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
 use Swarrot\Broker\Message;
 
 trait ConsumerJsonDataTrait

@@ -1,13 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Publisher;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Publisher;
 
-use Exception;
-use MR\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
-use MR\SwarrotExtensionBundle\Broker\Publisher\ErrorPublisher;
-use MR\SwarrotExtensionBundle\Broker\Publisher\PublisherInterface;
-use MR\SwarrotExtensionBundle\Broker\Publisher\SerializerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
+use Ensembl260\SwarrotExtensionBundle\Broker\Publisher\ErrorPublisher;
+use Ensembl260\SwarrotExtensionBundle\Broker\Publisher\PublisherInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Publisher\SerializerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Swarrot\Broker\Message;
@@ -41,7 +41,7 @@ class ErrorPublisherTest extends TestCase
 
     public function testErrorPublish(): void
     {
-        $exception = new Exception('my_fake_message_exception');
+        $exception = new \Exception('my_fake_message_exception');
         $message = new Message('my_fake_body', ['my_fake_properties'], '123');
         $xDeathEvent = new XDeathEvent('xdeath.max_lifetime_reached', $exception, $message, ['fake_options']);
         $exceptionTrace = FlattenException::create($exception)->toArray();
@@ -76,7 +76,7 @@ class ErrorPublisherTest extends TestCase
                 'error',
                 'fake_data_serialized',
                 ['content_type' => 'application/json'],
-                ['routing_key' => 'my_fake_error.rabbit.xdeath_routing_key',]
+                ['routing_key' => 'my_fake_error.rabbit.xdeath_routing_key']
             )
             ->shouldBeCalled();
 
@@ -85,7 +85,7 @@ class ErrorPublisherTest extends TestCase
 
     public function testErrorPublishThrowable(): void
     {
-        $exception = new Exception('my_fake_message_exception');
+        $exception = new \Exception('my_fake_message_exception');
         $message = new Message('my_fake_body', ['my_fake_properties'], '123');
         $xDeathEvent = new XDeathEvent('xdeath.max_lifetime_reached', $exception, $message, ['fake_options']);
         $exceptionTrace = FlattenException::create($exception)->toArray();
@@ -120,7 +120,7 @@ class ErrorPublisherTest extends TestCase
                 'error',
                 'fake_data_serialized',
                 ['content_type' => 'application/json'],
-                ['routing_key' => 'my_fake_error.rabbit.xdeath_routing_key',]
+                ['routing_key' => 'my_fake_error.rabbit.xdeath_routing_key']
             )
             ->shouldBeCalled();
 
@@ -152,7 +152,7 @@ class ErrorPublisherTest extends TestCase
                 'error',
                 'fake_data_serialized',
                 ['content_type' => 'application/json'],
-                ['routing_key' => 'my_fake_error.exception_routing_key',]
+                ['routing_key' => 'my_fake_error.exception_routing_key']
             )
             ->shouldBeCalled();
 

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Broker\Exception;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Exception;
 
-class InvalidDataException extends \RunTimeException
+class InvalidDataException extends \RuntimeException
 {
 }

@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Consumer;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Consumer;
 
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
 use PHPUnit\Framework\TestCase;
 use Swarrot\Broker\Message;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -30,7 +31,6 @@ trait ConstrainedConsumerTestCaseTrait
     /**
      * @dataProvider validDataProvider
      *
-     * @param mixed $data
      * @param mixed[]|null $groups
      */
     public function testValidMessage($data, ?array $groups = null): void
@@ -52,8 +52,7 @@ trait ConstrainedConsumerTestCaseTrait
     /**
      * @dataProvider invalidDataProvider
      *
-     * @param mixed $data
-     * @param mixed[] $expectedViolations
+     * @param mixed[]      $expectedViolations
      * @param mixed[]|null $groups
      */
     public function testInvalidMessage($data, array $expectedViolations, ?array $groups = null): void
@@ -73,9 +72,8 @@ trait ConstrainedConsumerTestCaseTrait
     }
 
     /**
-     * @param mixed $value
      * @param array|\Symfony\Component\Validator\Constraint[] $constraints
-     * @param mixed[]|null $groups
+     * @param mixed[]|null                                    $groups
      */
     private function validate($value, array $constraints, ?array $groups = null): ConstraintViolationListInterface
     {

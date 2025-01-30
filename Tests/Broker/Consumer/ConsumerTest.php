@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Consumer;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Consumer;
 
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConsumerInterface;
-use MR\SwarrotExtensionBundle\Broker\Consumer\SupportConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\SupportConsumerInterface;
 use PHPUnit\Framework\TestCase;
 use Swarrot\Broker\Message;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -91,7 +92,7 @@ class ConsumerTest extends TestCase
 
 /**
  * phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
- * phpcs:disable Squiz.Classes.ClassFileName.NoMatch
+ * phpcs:disable Squiz.Classes.ClassFileName.NoMatch.
  */
 class Consumer implements ConsumerInterface, ConstraintConsumerInterface, SupportConsumerInterface
 {
@@ -121,7 +122,7 @@ class Consumer implements ConsumerInterface, ConstraintConsumerInterface, Suppor
      */
     public function consumeData($data, Message $message, array $options): bool
     {
-        return $data['consumed'] === true;
+        return true === $data['consumed'];
     }
 
     /**
@@ -131,7 +132,7 @@ class Consumer implements ConsumerInterface, ConstraintConsumerInterface, Suppor
      */
     public function supportData($data, Message $message, array $options): bool
     {
-        return $data['supported'] === true;
+        return true === $data['supported'];
     }
 
     /**

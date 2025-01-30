@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Consumer;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Consumer;
 
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConsumerJsonDataTrait;
-use MR\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConsumerJsonDataTrait;
+use Ensembl260\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
 use PHPUnit\Framework\TestCase;
 use Swarrot\Broker\Message;
 
@@ -33,9 +34,6 @@ class ConsumerJsonDataTraitTest extends TestCase
 
     /**
      * @dataProvider bodyProvider
-     *
-     * @param mixed $body
-     * @param mixed $expectedData
      */
     public function testGetData($body, $expectedData): void
     {
@@ -78,8 +76,6 @@ class ConsumerJsonDataTraitTest extends TestCase
 
     /**
      * @dataProvider invalidBodyProvider
-     *
-     * @param mixed $body
      */
     public function testGetDataWillThrowInvalidDataException($body, string $expectedErrorMessage): void
     {
@@ -92,7 +88,7 @@ class ConsumerJsonDataTraitTest extends TestCase
 
 /**
  * phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
- * phpcs:disable Squiz.Classes.ClassFileName.NoMatch
+ * phpcs:disable Squiz.Classes.ClassFileName.NoMatch.
  */
 class ConsumerJsonData
 {

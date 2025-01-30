@@ -1,7 +1,8 @@
 <?php
-declare(strict_types = 1);
 
-namespace MR\SwarrotExtensionBundle\DependencyInjection\CompilerPass;
+declare(strict_types=1);
+
+namespace Ensembl260\SwarrotExtensionBundle\DependencyInjection\CompilerPass;
 
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

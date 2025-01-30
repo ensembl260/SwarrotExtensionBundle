@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Publisher;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Publisher;
 
-use MR\SwarrotExtensionBundle\Broker\Publisher\MessageFactory;
+use Ensembl260\SwarrotExtensionBundle\Broker\Publisher\MessageFactory;
 use PHPUnit\Framework\TestCase;
 
 class MessageFactoryTest extends TestCase

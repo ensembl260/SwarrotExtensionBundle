@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Broker\Processor\Event;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Processor\Event;
 
 use Swarrot\Broker\Message;
 use Symfony\Contracts\EventDispatcher\Event;

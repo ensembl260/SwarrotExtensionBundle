@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Broker\Processor\Configurator;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Processor\Configurator;
 
-use MR\SwarrotExtensionBundle\Broker\Processor\Callback\XDeathMaxLifetimeExceptionHandler;
+use Ensembl260\SwarrotExtensionBundle\Broker\Processor\Callback\XDeathMaxLifetimeExceptionHandler;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Broker\Processor\Callback;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Processor\Callback;
 
-use MR\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
+use Ensembl260\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;

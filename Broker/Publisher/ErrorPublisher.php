@@ -1,8 +1,8 @@
 <?php
 
-namespace MR\SwarrotExtensionBundle\Broker\Publisher;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Publisher;
 
-use MR\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
+use Ensembl260\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
 use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
@@ -17,7 +17,7 @@ class ErrorPublisher implements ErrorPublisherInterface
     public function __construct(
         PublisherInterface $publisher,
         string $routingKey,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
     ) {
         $this->publisher = $publisher;
         $this->routingKey = $routingKey;
@@ -55,8 +55,6 @@ class ErrorPublisher implements ErrorPublisherInterface
     }
 
     /**
-     * @param mixed $object
-     *
      * @return array
      */
     protected function getData($object)
@@ -87,8 +85,6 @@ class ErrorPublisher implements ErrorPublisherInterface
     }
 
     /**
-     * @param mixed $object
-     *
      * @return array
      */
     protected function getMetadata($object)
@@ -117,7 +113,7 @@ class ErrorPublisher implements ErrorPublisherInterface
      * @param mixed[] $messageProperties
      * @param mixed[] $overridenConfig
      *
-     * @throws \MR\SwarrotExtensionBundle\Broker\Exception\PublishException
+     * @throws \Ensembl260\SwarrotExtensionBundle\Broker\Exception\PublishException
      */
     private function publish(string $messageType, array $data, array $messageProperties = [], array $overridenConfig = []): void
     {
@@ -132,7 +128,7 @@ class ErrorPublisher implements ErrorPublisherInterface
     private function flattenException(\Throwable $exception): FlattenException
     {
         if (!$exception instanceof \Exception) {
-            $exception = new FatalError($exception->getMessage(), $exception->getCode(),error_get_last());
+            $exception = new FatalError($exception->getMessage(), $exception->getCode(), error_get_last());
         }
 
         return FlattenException::create($exception);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Command;
+namespace Ensembl260\SwarrotExtensionBundle\Command;
 
 use Bab\RabbitMq\Action\RealAction;
 use Bab\RabbitMq\Configuration;
@@ -34,7 +34,7 @@ class VhostMappingCreateCommand extends Command
         string $rabbitmqPort,
         string $rabbitmqLogin,
         string $rabbitmqPassword,
-        array $retryQueuesConfig
+        array $retryQueuesConfig,
     ) {
         parent::__construct();
 
@@ -56,7 +56,7 @@ class VhostMappingCreateCommand extends Command
 
     /**
      * {@inheritDoc}
-     * phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     * phpcs:disable SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter.
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -82,9 +82,7 @@ class VhostMappingCreateCommand extends Command
     }
 
     /**
-     * @param int|null|string $vhost
-     *
-     * @return VhostManager
+     * @param int|string|null $vhost
      */
     private function getVhostManager(OutputInterface $output, $vhost): VhostManager
     {

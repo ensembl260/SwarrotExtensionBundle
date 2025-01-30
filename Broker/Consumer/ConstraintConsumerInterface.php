@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Broker\Consumer;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Consumer;
 
 use Swarrot\Broker\Message;
 
 interface ConstraintConsumerInterface
 {
     /**
-     * @param mixed $data
      * @param mixed[] $options
      *
      * @return \Symfony\Component\Validator\Constraint[]

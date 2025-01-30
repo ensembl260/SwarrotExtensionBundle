@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Publisher;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Publisher;
 
-use MR\SwarrotExtensionBundle\Broker\Publisher\JsonSerializer;
+use Ensembl260\SwarrotExtensionBundle\Broker\Publisher\JsonSerializer;
 use PHPUnit\Framework\TestCase;
 
 class JsonSerializerTest extends TestCase

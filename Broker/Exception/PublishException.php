@@ -2,23 +2,19 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Broker\Exception;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Exception;
 
 class PublishException extends \Exception
 {
-    /** @var mixed */
     private $data;
     private string $messageType;
 
-    /**
-     * @param mixed $data
-     */
     public function __construct(
         $data,
         string $messageType,
         ?string $message = null,
         int $code = 0,
-        ?\Throwable $previous = null
+        ?\Throwable $previous = null,
     ) {
         parent::__construct($message, $code, $previous);
 

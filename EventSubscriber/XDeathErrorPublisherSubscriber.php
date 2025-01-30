@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\EventSubscriber;
+namespace Ensembl260\SwarrotExtensionBundle\EventSubscriber;
 
-use MR\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
-use MR\SwarrotExtensionBundle\Broker\Publisher\ErrorPublisher;
+use Ensembl260\SwarrotExtensionBundle\Broker\Processor\Event\XDeathEvent;
+use Ensembl260\SwarrotExtensionBundle\Broker\Publisher\ErrorPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

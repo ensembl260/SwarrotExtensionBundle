@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle;
+namespace Ensembl260\SwarrotExtensionBundle;
 
-use MR\SwarrotExtensionBundle\DependencyInjection\CompilerPass\BrokerProcessorPass;
+use Ensembl260\SwarrotExtensionBundle\DependencyInjection\CompilerPass\BrokerProcessorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

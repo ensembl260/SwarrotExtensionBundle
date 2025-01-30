@@ -1,11 +1,11 @@
 <?php
 
-namespace MR\SwarrotExtensionBundle\Broker\Processor;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Processor;
 
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
-use MR\SwarrotExtensionBundle\Broker\Consumer\ConsumerInterface;
-use MR\SwarrotExtensionBundle\Broker\Consumer\SupportConsumerInterface;
-use MR\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConstraintConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\ConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\SupportConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Exception\InvalidDataException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * This class is use to wrap your domain consumer
  * This class is call by swarrot consumer with $message and $options
- * and do many calls on injected consumer like this
+ * and do many calls on injected consumer like this.
  *
  *      $data = $consumer->getData($message, $options); Allow you to extract the data from the Message
  *      $consumer->supportData($data, $message, $options); Allow you to skip a message
@@ -36,7 +36,7 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
 
     public function __construct(
         ConsumerInterface $consumer,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
     ) {
         $this->consumer = $consumer;
         $this->consumerClass = get_class($this->consumer);
@@ -45,7 +45,7 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
     }
 
     /**
-     * get/decode -> support -> validate -> consume
+     * get/decode -> support -> validate -> consume.
      *
      * @param mixed[] $options
      *
@@ -120,15 +120,12 @@ class Processor implements ProcessorInterface, LoggerAwareInterface
         }
     }
 
-    /**
-     * @param mixed $data
-     */
     private function buildLoggerContext(
         Message $message,
         $data = null,
         ?\Throwable $exception = null,
         bool $withMessageProperties = false,
-        bool $withMessageBody = false
+        bool $withMessageBody = false,
     ): array {
         $context = [
             'message_id' => $message->getId(),

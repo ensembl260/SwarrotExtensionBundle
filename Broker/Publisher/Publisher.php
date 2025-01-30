@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Broker\Publisher;
+namespace Ensembl260\SwarrotExtensionBundle\Broker\Publisher;
 
-use MR\SwarrotExtensionBundle\Broker\Exception\PublishException;
+use Ensembl260\SwarrotExtensionBundle\Broker\Exception\PublishException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
@@ -19,7 +19,7 @@ class Publisher implements PublisherInterface, LoggerAwareInterface
 
     public function __construct(
         SwarrotPublisher $publisher,
-        MessageFactoryInterface $messageFactory
+        MessageFactoryInterface $messageFactory,
     ) {
         $this->publisher = $publisher;
         $this->messageFactory = $messageFactory;

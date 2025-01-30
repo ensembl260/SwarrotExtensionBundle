@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MR\SwarrotExtensionBundle\Tests\Broker\Consumer;
+namespace Ensembl260\SwarrotExtensionBundle\Tests\Broker\Consumer;
 
-use MR\SwarrotExtensionBundle\Broker\Consumer\SupportConsumerInterface;
+use Ensembl260\SwarrotExtensionBundle\Broker\Consumer\SupportConsumerInterface;
 use PHPUnit\Framework\TestCase;
 use Swarrot\Broker\Message;
 
@@ -11,8 +12,6 @@ trait SupportConsumerTestCaseTrait
 {
     /**
      * @dataProvider notSupportDataProvider
-     *
-     * @param mixed $data
      */
     public function testNotSupportedMessage($data): void
     {
@@ -25,8 +24,6 @@ trait SupportConsumerTestCaseTrait
 
     /**
      * @dataProvider supportDataProvider
-     *
-     * @param mixed $data
      */
     public function testSupportedMessage($data): void
     {
