@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Ensembl260\SwarrotExtensionBundle\Command;
 
-use Bab\RabbitMq\Action\RealAction;
-use Bab\RabbitMq\Configuration;
-use Bab\RabbitMq\HttpClient\CurlClient;
-use Bab\RabbitMq\Logger\CliLogger;
-use Bab\RabbitMq\VhostManager;
+use Ensembl260\SwarrotExtensionBundle\Rabbitmq\Action\RealAction;
+use Ensembl260\SwarrotExtensionBundle\Rabbitmq\Configuration;
+use Ensembl260\SwarrotExtensionBundle\Rabbitmq\HttpClient\CurlClient;
+use Ensembl260\SwarrotExtensionBundle\Rabbitmq\Logger\CliLogger;
+use Ensembl260\SwarrotExtensionBundle\Rabbitmq\VhostManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
